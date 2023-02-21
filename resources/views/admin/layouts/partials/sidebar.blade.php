@@ -53,6 +53,7 @@
                     </a>
                 </li>
                 <li class="nav-header">KELOLA</li>
+                @if (Auth::guard('admin')->user()->level == 'admin')
                 <li class="nav-item">
                     <a href="/petugas" class="nav-link">
                         <i class="nav-icon fas fa-user-tie"></i>
@@ -60,6 +61,7 @@
                             Petugas
                         </p>
                     </a>
+                    @endif
                 </li>
                 <li class="nav-item">
                     <a href="/user" class="nav-link">
@@ -95,10 +97,11 @@
                 <li class="nav-header">MAIN MENU</li>
                 <li class="nav-item">
                     <a href="/pengaduan" class="nav-link">
-                        <i class="nav-icon fas fa-ellipsis-h"></i>
+                        <i class="nav-icon far fa-envelope"></i>
                         <p>Pengaduan</p>
                     </a>
                 </li>
+                @if (Auth::guard('admin')->user()->level == 'admin')
                 <li class="nav-header">PRINT LAPORAN</li>
                 <li class="nav-item">
                     <a href="iframe.html" class="nav-link">
@@ -106,10 +109,11 @@
                         <p>Print laporan</p>
                     </a>
                 </li>
+                @endif
                 <li class="nav-header">LOGOUT</li>
                 <li class="nav-item">
                     <a href="/logout/admin" class="nav-link">
-                        <i class="nav-icon fas fa-ellipsis-h"></i>
+                        <i class="nav-icon fa fa-power-off"></i>
                         <p>Logout</p>
                     </a>
                 </li>

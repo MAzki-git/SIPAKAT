@@ -82,10 +82,6 @@ return [
             'driver' => 'eloquent',
             'model' => \App\Models\Masyarakat::class,
         ],
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => \App\Models\Masyarakat::class,
-        // ],
 
         'admins' => [
             'driver' => 'eloquent',

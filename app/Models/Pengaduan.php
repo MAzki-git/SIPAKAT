@@ -9,14 +9,14 @@ class Pengaduan extends Model
 {
     use HasFactory;
     protected $table = 'pengaduans';
-    protected $primarykey = 'id_pengaduan';
-    protected $fillable = [
-        'judul_laporan',
-        'tgl_pengaduan',
-        'isi_laporan',
-        'foto',
-        'status',
-    ];
+    protected $primaryKey = 'id_pengaduan';
+    protected $guarded = ['id_pengaduan'];
+    //     'judul_laporan',
+    //     'tgl_pengaduan',
+    //     'isi_laporan',
+    //     'foto',
+    //     'status',
+    // ];
 
     protected $dates = ['tgl_pengaduan', 'deleted_at'];
     public function user()

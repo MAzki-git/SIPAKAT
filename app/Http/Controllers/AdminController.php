@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Masyarakat;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Petugas;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,9 @@ class AdminController extends Controller
 
     public function indexDashboard()
     {
-        return view('dashboard.admin-dashboard');
+        $petugas = Petugas::where('level', 'petugas')->count();
+        $user = Masyarakat::all()->count();
+        return view('dashboard.admin-dashboard', compact('petugas', 'user'));
     }
 
     public function login(Request $request)

@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\TanggapanController;
 use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
@@ -44,20 +46,27 @@ Route::get('/logout/admin', [AdminController::class, 'logout'])->name('admin.log
 Route::get('/petugas', [AdminController::class, 'index']);
 Route::get('/tambah', [AdminController::class, 'create']);
 Route::post('/store', [AdminController::class, 'store']);
-Route::get('/edit{id_pegawai}', [AdminController::class, 'edit'])->name('edit');
-Route::post('/update{id_petugas}', [AdminController::class, 'update'])->name('update');
-Route::get('/delete{id_petugas}', [AdminController::class, 'destroy'])->name('delete');
-Route::get('/show{id_petugas}', [AdminController::class, 'show'])->name('show');
+Route::get('/edit/{id_pegawai}', [AdminController::class, 'edit'])->name('edit');
+Route::post('/update/{id_petugas}', [AdminController::class, 'update'])->name('update');
+Route::get('/delete/{id_petugas}', [AdminController::class, 'destroy'])->name('delete');
+Route::get('/show/{id_petugas}', [AdminController::class, 'show'])->name('show');
 
 //CRUD MASYARAKAT
 Route::get('/user', [PetugasController::class, 'index']);
 Route::get('/tambah/user', [PetugasController::class, 'create']);
-Route::post('/store', [PetugasController::class, 'store']);
-Route::get('/edit/user{nik}', [PetugasController::class, 'edit'])->name('edit/user');
-Route::post('/update/user{nik}', [PetugasController::class, 'update'])->name('update/user');
-Route::get('/delete/user{nik}', [PetugasController::class, 'destroyuser'])->name('delete/user');
-Route::get('/show/user{nik}', [PetugasController::class, 'show'])->name('show/user');
+Route::post('/store/user', [PetugasController::class, 'store']);
+Route::get('/edit/user/{nik}', [PetugasController::class, 'edit'])->name('edit/user');
+Route::post('/update/user/{nik}', [PetugasController::class, 'update'])->name('update/user');
+Route::get('/delete/user/{nik}', [PetugasController::class, 'destroyuser'])->name('delete/user');
+Route::get('/show/user/{nik}', [PetugasController::class, 'show'])->name('show/user');
 
 //pengaduan
 Route::post('/store', [UserController::class, 'store'])->name('pekat.store');
 // Route::get('/laporan/{siapa?}', [UserController::class, 'laporan'])->name('pekat.laporan');
+Route::get('/edit/pengaduan/{id_pengaduan}', [PengaduanController::class, 'edit'])->name('edit/pengaduan');
+Route::post('/update/pengaduan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('update/pengaduan');
+//tanggapan
+Route::get('/pengaduan', [PengaduanController::class, 'index']);
+Route::get('/show/pengaduan/{id_pengaduan}', [PengaduanController::class, 'show'])->name('showPengaduan');
+Route::post('tanggapan/createorupdate', [TanggapanController::class, 'CreateOrUpdate'])->name('tanggapan');
+Route::get('/delete/pengaduan/{id_pengaduan}', [PengaduanController::class, 'destroypengaduan'])->name('delete/pengaduan');

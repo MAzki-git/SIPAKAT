@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('foto');
             $table->enum('status', ['0', 'proses', 'selesai']);
             $table->timestamps();
+
             $table->foreign('nik')->references('nik')->on('masyarakats');
         });
     }

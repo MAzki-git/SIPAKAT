@@ -11,7 +11,7 @@
         <div class="card card-primary">
             <div class="card-header">
             </div>
-            <form action="/store" method="post">
+            <form action="/store/user" method="post">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">

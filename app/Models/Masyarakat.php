@@ -12,7 +12,7 @@ class Masyarakat extends Authenticatable
 
     protected $guard = 'masyarakat';
     protected $table = 'masyarakats';
-    protected $primarykey = 'nik';
+    protected $primaryKey = 'nik';
     protected $fillable = [
         'nik',
         'nama',

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title','Admin | Dashboard')
-@section('header', 'Dashboard Admin')
+@section('header', 'Dashboard')
 @section('content')
 <div class="row">
     <div class="col-12 col-sm-6 col-md-3">
@@ -10,7 +10,7 @@
             <div class="info-box-content">
                 <span class="info-box-text">Petugas</span>
                 <span class="info-box-number">
-                    32
+                    {{$petugas}}
                     {{-- <small>%</small> --}}
                 </span>
             </div>
@@ -28,7 +28,7 @@
 
             <div class="info-box-content">
                 <span class="info-box-text">Masyarakat</span>
-                <span class="info-box-number">23</span>
+                <span class="info-box-number">{{$user}}</span>
             </div>
             {{--
             <!-- /.info-box-content --> --}}
