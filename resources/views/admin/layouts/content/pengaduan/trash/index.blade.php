@@ -8,7 +8,6 @@
             <div class="card-header">
                 <h3 class="card-title">DataTable with default features</h3>
             </div>
-
             <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
@@ -37,12 +36,13 @@
                             </td>
                             <td class="project-actions text-center">
                                 <a style="width: 40%" class="btn btn-primary btn-sm"
-                                    href="{{ route('showPengaduan', $item->id_pengaduan) }}">
-                                    <i class="fas fa-eye">
+                                    href="{{ route('restore.pengaduan', $item->id_pengaduan) }}">
+                                    <i class="fas fa-undo"></i>
+
                                     </i>
                                 </a>
-                                <a style="width:40%" href="{{ route('delete/pengaduan', $item->id_pengaduan ) }}"
-                                    class=" delete-btn btn btn-danger btn-sm" style="width: 50%">
+                                <a style="width:40%" href="{{ route('force.pengaduan', $item->id_pengaduan ) }}"
+                                    class="delete-btn btn btn-danger btn-sm" style="width: 50%">
                                     <i class=" fas fa-trash">
                                     </i>
                                 </a>

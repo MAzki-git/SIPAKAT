@@ -22,18 +22,23 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    {{-- @if(Auth::guard('masyarakat')->check()) --}}
+                    @if(Auth::guard('masyarakat')->check())
                     <ul class="navbar-nav text-center ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link ml-3 text-white" href="">Laporan</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link ml-3 text-white" href="/logout/masyarakat"
-                                style="text-decoration: underline">{{ Auth::guard('masyarakat')->user()?->nama
-                                }}</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                aria-expanded="false" style="color: white;">
+                                {{
+                                Auth::guard('masyarakat')->user()->nama
+                                }}
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout/user">Logout</a>
+                            </div>
                         </li>
                     </ul>
-                    {{-- @endauth --}}
+                    @endauth
                 </div>
             </div>
         </div>
@@ -65,6 +70,14 @@
                             rows="4">{{ old('isi_laporan') }}</textarea>
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputEmail1">kategori</label>
+                        <select name="id_kategori" class="custom-select">
+                            @foreach ($kategori as $item )
+                            <option value="{{ $item->id_kategori }}">{{ $item->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <input type="file" name="foto" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-custom mt-2">Kirim</button>
@@ -73,47 +86,62 @@
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12 col-12 col">
             <div class="content content-bottom shadow">
-                {{-- <div>
-                    <img src="{{ asset('images/user_default.svg') }}" alt="user profile" class="photo">
-                    <div class="self-align">
-                        <h5><a style="color: #6a70fc" href="#">{{ Auth::guard('masyarakat')->user()->nama }}</a></h5>
-                        <p class="text-dark">{{ Auth::guard('masyarakat')->user()->username }}</p>
+                <div class="card-header" style="width: 100%">
+                    <div>
+                        <img src="{{ asset('/users/images/user_default.svg') }}" alt="user profile" class="photo">
+                        <div class="self-align">
+                            <h5><a style="color: #6a70fc" href="#">{{ Auth::guard('masyarakat')->user()->nama }}</a>
+                            </h5>
+                            <p class="text-dark">{{ Auth::guard('masyarakat')->user()->username }}</p>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col">
+                                <p class="italic mb-0">pending</p>
+                                <div class="text-center">
+                                    {{ $pending }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <p class="italic mb-0">Proses</p>
+                                <div class="text-center">
+                                    {{ $proses}}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <p class="italic mb-0">Selesai</p>
+                                <div class="text-center">
+                                    {{ $selesai }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row text-center">
-                        <div class="col">
-                            <p class="italic mb-0">Terverifikasi</p>
-                            <div class="text-center">
-                                {{ $terverifikasi }}
-                            </div>
-                        </div>
-                        <div class="col">
-                            <p class="italic mb-0">Proses</p>
-                            <div class="text-center">
-                                {{ $proses}}
-                            </div>
-                        </div>
-                        <div class="col">
-                            <p class="italic mb-0">Selesai</p>
-                            <div class="text-center">
-                                {{ $selesai }}
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="" style="text-decoration:none;">Laporan saya</a>
+                    </li>
+                    <li class="list-group-item">A third item</li>
+                    <li class="list-group-item">A third item</li>
+                    {{-- <li class="list-group-item">
+                        <a href="/logout/admin" <i class="fa fa-power-off"></i>
+                            <p>Logout</p>
+                        </a>
+                    </li> --}}
+                </ul>
             </div>
         </div>
 
         <div class="row mt-5">
-            {{-- <div class="col-lg-8"> --}}
+            <div class="col-lg-8">
                 {{-- <a class="d-inline tab {{ $siapa != 'me' ? 'tab-active' : ''}} mr-4" href="">
                     Semua
                 </a>
                 <a class="d-inline tab {{ $siapa == 'me' ? 'tab-active' : ''}}" href="">
                     Laporan Saya
-                </a> --}}
-                <hr>
+                </a>
+                <hr> --}}
             </div>
-            @foreach ($pengaduan as $pengaduan => $v)
+            {{-- @foreach ($pengaduan as $pengaduan => $v)
             <div class="col-lg-8">
                 <div class="laporan-top">
                     <img src="{{ asset('/users/images/user_default.svg') }}" alt="profile" class="profile">
@@ -145,13 +173,13 @@
                         class="gambar-lampiran">
                     @endif
                     @if ($v->tanggapan != null)
-                    <p class="mt-3 mb-1">{{ '*Tanggapan dari '. $v->tanggapan->petugas->nama_petugas }}</p>
+                    <p class="mt-3 mb-1">{{ 'Tanggapan dari '. $v->tanggapan->petugas->nama_petugas }}</p>
                     <p class="light">{{ $v->tanggapan->tanggapan }}</p>
                     @endif
                 </div>
                 <hr>
             </div>
-            @endforeach
+            @endforeach --}}
         </div>
     </div>
     {{-- Footer --}}

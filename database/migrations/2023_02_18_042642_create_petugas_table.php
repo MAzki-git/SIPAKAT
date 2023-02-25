@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('telp', 13);
             $table->enum('level', ['admin', 'petugas']);
+            $table->date('tgl_lahir');
+            $table->enum('gender', ['laki-laki', 'perempuan']);
+            // $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

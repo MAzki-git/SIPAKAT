@@ -6,6 +6,7 @@ use App\Models\Petugas;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class AdminSeeder extends Seeder
 {
@@ -22,6 +23,8 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'telp' => '0821165789',
             'level' => 'admin',
+            'gender' => 'laki-laki',
+            'tgl_lahir' => Carbon::parse('2000-12-12'),
 
         ]);
         Petugas::create([
@@ -30,6 +33,8 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('petugas123'),
             'telp' => '0821184274',
             'level' => 'petugas',
+            'gender' => 'laki-laki',
+            'tgl_lahir' => Carbon::parse('2000-12-28'),
         ]);
     }
 }

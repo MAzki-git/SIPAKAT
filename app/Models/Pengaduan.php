@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pengaduan extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+
     protected $table = 'pengaduans';
     protected $primaryKey = 'id_pengaduan';
     protected $guarded = ['id_pengaduan'];
@@ -27,5 +30,10 @@ class Pengaduan extends Model
     public function tanggapan()
     {
         return $this->belongsTo(Tanggapan::class, 'id_pengaduan', 'id_pengaduan');
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(kategori::class, 'id_kategori', 'id_kategori');
     }
 }

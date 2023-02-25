@@ -4,7 +4,7 @@
     <a href="#" class="brand-link">
         <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">SIPAKAT</span>
+        <span class="brand-text font-weight-light"><B>SIPAKAT</b></span>
     </a>
 
     {{--
@@ -21,13 +21,15 @@
                 {{-- @auth
                 @dd(Auth()->guard('admin'))
                 @endauth --}}
-                <a href="" class="d-block">{{ Auth::guard('admin')->user()->nama_petugas }}</a>
+                <a href="{{ route('profile.petugas') }}" class="d-block">{{
+                    Auth::guard('admin')->user()->nama_petugas
+                    }}</a>
             </div>
         </div>
 
         {{--
         <!-- SidebarSearch Form --> --}}
-        <div class="form-inline">
+        {{-- <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
@@ -36,7 +38,8 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
+
 
         {{--
         <!-- Sidebar Menu --> --}}
@@ -45,14 +48,14 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
+                    <a href="/dashboard/admin" class="nav-link active">
                         <i class="nav-icon fa-light fa-house"></i>
                         <p>
                             Dashboard
                         </p>
                     </a>
                 </li>
-                <li class="nav-header">KELOLA</li>
+                <li class="nav-header">MENGELOLA</li>
                 @if (Auth::guard('admin')->user()->level == 'admin')
                 <li class="nav-item">
                     <a href="/petugas" class="nav-link">
@@ -110,6 +113,35 @@
                     </a>
                 </li>
                 @endif
+                <li class="nav-header">SAMPAH</li>
+                <li class="nav-item">
+                    <a href="iframe.html" class="nav-link">
+                        <i class="nav-icon fas fa-trash"></i>
+                        <p>Sampah</p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if (Auth::guard('admin')->user()->level == 'admin')
+                        <li class="nav-item">
+                            <a href="/trash/petugas" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Petugas</p>
+                            </a>
+                        </li>
+                        @endif
+                        <li class="nav-item">
+                            <a href="/trash/user" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Masyarakat</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/trash" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pengaduan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-header">LOGOUT</li>
                 <li class="nav-item">
                     <a href="/logout/admin" class="nav-link">

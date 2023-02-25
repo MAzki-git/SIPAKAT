@@ -16,7 +16,10 @@ class Petugas extends Authenticatable
         'username',
         'password',
         'telp',
-        'level'
+        'level',
+        'foto',
+        'gender',
+        'tgl_lahir'
     ];
     public function tanggapan()
     {

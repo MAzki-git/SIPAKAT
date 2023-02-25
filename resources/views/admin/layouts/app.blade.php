@@ -4,9 +4,10 @@
 @include('admin.layouts.partials.head')
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    {{-- @include('sweetalert::alert') --}}
     <div class="wrapper">
         {{-- AdminLTE perloader --}}
-        @include('admin.layouts.partials.preloader')
+        {{-- @include('admin.layouts.partials.preloader') --}}
         {{-- AdminLTE navbar --}}
         @include('admin.layouts.partials.navbar')
         {{-- AdminLTE sidebar --}}

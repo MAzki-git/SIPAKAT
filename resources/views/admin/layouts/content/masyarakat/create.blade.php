@@ -1,64 +1,82 @@
 @extends('admin.layouts.app')
-@section('title','Dashboard | Input')
+@section('title','Dashboard | tambah')
 @section('header', 'Tambah masyarakat')
 
 @section('content')
 
 <div class="row">
-    <!-- left column -->
     <div class="col-12">
-        <!-- general form elements -->
-        <div class="card card-primary">
-            <div class="card-header">
+        <div class="card card-default">
+            <div class="card-header card-outline card-primary">
             </div>
-            <form action="/store/user" method="post">
+            <form action="{{ route('store.user') }}" method="post">
                 @csrf
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">NIK</label>
-                        <input type="number" class="form-control" name="nik" id="NikInputEmail1"
-                            placeholder="Masukan Nomor Induk Kependudukan" value="{{ old('nik') }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="NIK">NIK</label>
+                                <input type="number" class="form-control" name="nik"
+                                    placeholder="Masukan Nomor Induk Kependudukan">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="nama">Nama</label>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="nama" placeholder="Masukan nama">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Nama </label>
-                        <input type="text" class="form-control" name="nama" id="NamaInputEmail1"
-                            placeholder="Masukan nama " value="{{ old('nama') }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" name="username" placeholder="Masukan username">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" name="password"
+                                    placeholder="Masukan password">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input type="text" class="form-control" name="username" id="NamaInputEmail1"
-                            placeholder="Masukan username " value="{{ old('username') }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phone">Phone Number:</label>
+                                <input type="number" class="form-control" id="phone" name="telp"
+                                    placeholder="(+62)821165278" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select name="gender" id="gender" class="custom-select">
+                                    {{-- <option value="laki-laki" selected>Pilih level (Default laki-laki)</option>
+                                    --}}
+                                    <option value="laki-laki">Laki laki</option>
+                                    <option value="perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Password</label>
-                        <input type="password" class="form-control" name="password" id="NamaInputEmail1"
-                            placeholder="Masukan password " value="{{ old('password') }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="tgl_lahir">Tanggal lahir</label>
+                            <input type="text" class="form-control" id="datepicker" name="tgl_lahir"
+                                placeholder="d/m/Y">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="alamat">Alamat</label>
+                            <textarea name="alamat" class="form-control" cols="10" rows="2"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Telepon</label>
-                        <input type="number" class="form-control" name="telp" id="NamaInputEmail1"
-                            placeholder="Masukan nomor telepon " value="{{ old('telp') }}">
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary float-right mt-3" style="width:30%">Tambah</button>
                 </div>
             </form>
         </div>
-    </div>
-    <div class="col-12">
-        @if(Session::has('username'))
-        <div class="alert alert-danger">
-            {{ Session::get('username') }}
-        </div>
-        @endif
-        @if($errors->any())
-        @foreach ($errors->all() as $error)
-        <div class="alert alert-danger">
-            {{$error}}
-        </div>
-        @endforeach
-        @endif
     </div>
 </div>
 @endsection

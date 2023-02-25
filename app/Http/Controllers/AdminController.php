@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Masyarakat;
+use App\Models\Pengaduan;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Petugas;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\PaginationServiceProvider;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
+
 
 class AdminController extends Controller
 {
@@ -18,9 +24,14 @@ class AdminController extends Controller
 
     public function indexDashboard()
     {
+        $proses = Pengaduan::where('status', 'proses')->count();
+        $selesai = Pengaduan::where('status', 'selesai')->count();
         $petugas = Petugas::where('level', 'petugas')->count();
         $user = Masyarakat::all()->count();
-        return view('dashboard.admin-dashboard', compact('petugas', 'user'));
+        $masyarakat = Masyarakat::paginate('4');
+        $pengaduan = Pengaduan::paginate('6');
+
+        return view('dashboard.admin-dashboard', compact('masyarakat', 'pengaduan', 'petugas', 'user', 'proses', 'selesai'));
     }
 
     public function login(Request $request)
@@ -80,7 +91,10 @@ class AdminController extends Controller
             'username' => ['required'],
             'password' => ['required'],
             'telp' => ['required'],
-            'level' => ['required', 'in:admin,petugas']
+            'level' => ['required', 'in:admin,petugas'],
+            'tgl_lahir' => ['required'],
+            'gender' => ['required', 'in:laki-laki,perempuan'],
+
         ]);
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate);
@@ -89,14 +103,19 @@ class AdminController extends Controller
         if ($username) {
             return redirect()->back()->with(['username => username sudah digunakan']);
         }
+        // dd($data);
         petugas::create([
             'nama_petugas' => $data['nama_petugas'],
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             'telp' => $data['telp'],
             'level' => $data['level'],
+            'gender' => $data['gender'],
+            'tgl_lahir' => $data['tgl_lahir']
         ]);
-        return redirect('/petugas');
+
+        // Alert::success('Your Post as been submited!', 'success');
+        return redirect('/petugas')->with('success', 'Berhasil Ditambahkan');
     }
     public function edit($id_petugas)
     {
@@ -111,11 +130,13 @@ class AdminController extends Controller
         $petugas->update([
             'nama_petugas' => $data['nama_petugas'],
             'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-            'telp' => $data['telp'],
+            'password' => Hash::make($data['password'] ?? ''),
+            'telp' => $data['telp'] ?? '',
             'level' => $data['level'],
+            'gender' => $data['gender'],
+            'tgl_lahir' => $data['tgl_lahir']
         ]);
-        return redirect('/petugas');
+        return redirect('/petugas')->with('success', 'Berhasil di update');
     }
     public function destroy($id_petugas)
     {

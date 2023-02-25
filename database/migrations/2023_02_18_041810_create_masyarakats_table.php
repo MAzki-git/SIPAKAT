@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('username', 25)->unique();
             $table->string('password');
             $table->string('telp', 13)->nullable();
+            $table->enum('gender', ['laki-laki', 'perempuan']);
+            $table->string('foto')->nullable();
+            $table->date('tgl_lahir');
+            $table->text('alamat');
             $table->timestamps();
         });
     }

@@ -17,7 +17,8 @@
                             <th>Nik</th>
                             <th>Nama</th>
                             <th>Username</th>
-                            <th>Telpon</th>
+                            {{-- <th>Jenis kelamin</th> --}}
+                            <th>telepon</th>
                             <th>Menu</th>
                         </tr>
                     </thead>
@@ -29,6 +30,7 @@
                             </td>
                             <td>{{ $item->nama }}</td>
                             <td> {{ $item->username }}</td>
+                            {{-- <td>{{ $item->gender }}</td> --}}
                             <td>{{ $item->telp }}</td>
                             <td class="project-actions text-center">
 
@@ -40,7 +42,8 @@
                                     <i class=" fas fa-pencil-alt">
                                     </i>
                                 </a>
-                                <a href="{{ route('delete/user', $item->nik) }}" class="btn btn-danger btn-sm">
+                                <a href="{{ route('delete/user', $item->nik) }}"
+                                    class=" delete-btn btn btn-danger btn-sm">
                                     <i class=" fas fa-trash">
                                     </i>
                                 </a>
@@ -53,4 +56,6 @@
         </div>
     </div>
 </div>
+
 @endsection
+@section('js')

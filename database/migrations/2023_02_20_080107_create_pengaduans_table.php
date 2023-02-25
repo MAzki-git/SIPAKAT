@@ -18,12 +18,15 @@ return new class extends Migration
             $table->string('judul_laporan');
             $table->datetime('tgl_pengaduan');
             $table->char('nik', 16);
+            $table->foreignId('id_kategori');
             $table->text('isi_laporan');
             $table->string('foto');
             $table->enum('status', ['0', 'proses', 'selesai']);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('nik')->references('nik')->on('masyarakats');
+            $table->foreign('id_kategori')->references('id_kategori')->on('kategoris');
         });
     }
 

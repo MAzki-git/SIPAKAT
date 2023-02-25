@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row ">
-        <div class="col-md-6">
+        <div class="col-md-10">
 
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
@@ -34,7 +34,15 @@
                                     }}</a>
                             </li>
                             <li class="list-group-item">
+                                <b>Jenis kelamin :</b> <a class="float-right" style="color:white">{{ $user->gender
+                                    }}</a>
+                            </li>
+                            <li class="list-group-item">
                                 <b>Telepon :</b> <a class="float-right" style="color: white">{{ $user->telp }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Alamat :</b> <a class="float-right" style="color: white">{{
+                                    $user->alamat }}</a>
                             </li>
                             <li class="list-group-item">
                                 <a class="btn btn-info btn-sm" href="{{ route('edit/user', $user->nik) }}"

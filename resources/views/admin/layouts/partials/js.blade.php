@@ -56,7 +56,19 @@
 <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-@yield('js')
+{{-- @yield('js') --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script>
+    @if (Session::has('success'))
+Swal.fire({
+title: 'Success!',
+text: '{{ session('success') }}',
+icon: 'success',
+confirmButtonText: 'OK'
+});
+@endif
+</script>
+
 <script>
     $(function () {
     $("#example1").DataTable({
@@ -74,3 +86,41 @@
     });
   });
 </script>
+
+{{-- confirm delete --}}
+<script>
+    $(document).ready(function() {
+  // Add event listener to delete button
+  $('.delete-btn').click(function(event) {
+    event.preventDefault();
+    var url = $(this).attr('href');
+
+    // Show SweetAlert confirmation dialog
+    Swal.fire({
+      title: 'Apakah anda yakin?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'hapus ini!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Redirect to the delete URL if confirmed
+        window.location.href = url;
+      }
+    })
+  });
+});
+</script>
+
+{{-- //datepicker --}}
+<script>
+    $(document).ready(function(){
+    flatpickr("#datepicker", {
+    dateFormat: "Y/m/d",
+    maxDate: "today",
+    allowInput: true
+    });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

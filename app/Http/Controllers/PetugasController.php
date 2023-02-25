@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Petugas;
 use App\Models\Masyarakat;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class PetugasController extends Controller
 {
@@ -35,6 +35,9 @@ class PetugasController extends Controller
             'username' => ['required'],
             'password' => ['required'],
             'telp' => ['required'],
+            'tgl_lahir' => ['required'],
+            'gender' => ['required', 'in:laki-laki,perempuan'],
+            'alamat' => ['required']
         ]);
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate);
@@ -43,14 +46,20 @@ class PetugasController extends Controller
         if ($username) {
             return redirect()->back()->with(['username => username sudah digunakan']);
         }
+        // dd($data);
         Masyarakat::create([
             'nik' => $data['nik'],
             'nama' => $data['nama'],
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             'telp' => $data['telp'],
+            'tgl_lahir' => $data['tgl_lahir'],
+            'gender' => $data['gender'],
+            'alamat' => $data['alamat'],
+            // 'foto' => $data['foto' ?? ''],
         ]);
-        return redirect('/user');
+
+        return redirect('/user')->with('success', 'Data masyarakat berhasil ditambahkan');
     }
     public function edit($nik)
     {
@@ -65,29 +74,25 @@ class PetugasController extends Controller
             'username' => 'required',
             'password'  => 'required',
             'telp' => 'required',
+            'tgl_lahir' => ['required'],
+            'gender' => ['required', 'in:laki-laki,perempuan'],
+            'alamat' => ['required']
         ]);
         if ($request['nik'] === $nik) {
             Masyarakat::where('nik', $nik)->update([
                 'nama' => $request['nama'],
                 'username' => $request['username'] ?? '',
-                'password' => Hash::make($request['password']),
+                'password' => Hash::make($request['password']) ?? '',
                 'telp' => $request['telp'] ?? '',
+                'tgl_lahir' => $request['tgl_lahir'],
+                'gender' => $request['gender'],
+                'alamat' => $request['alamat']
 
             ]);
         } else {
             Masyarakat::where('nik', $nik)->update($validatedData);
         }
-        // $data = $request->all();
-        // $user = masyarakat::findOrFail($nik);
-
-        // $user->update([
-        //     'nik' => $data['nik'],
-        //     'nama' => $data['nama_petugas'],
-        //     'username' => $data['username'],
-        //     'password' => Hash::make($data['password']),
-        //     'telp' => $data['telp'],
-        // ]);
-        return redirect('/user');
+        return redirect('/user')->with('success', 'Data masyarakat berhasil di update');
     }
 
     public function destroyuser($nik)
@@ -95,5 +100,31 @@ class PetugasController extends Controller
         $user = Masyarakat::findOrFail($nik);
         $user->delete();
         return redirect('/user');
+    }
+
+    public function editprofile()
+    {
+        // $petugas = petugas::Where('id_petugas', $id_petugas)->first();
+        $petugas = Petugas::where('id_petugas', Auth::guard('admin')->user()->id_petugas)->first();
+        return view('admin.layouts.content.profile.edit', compact('petugas'));
+    }
+    public function updateprofile(Request $request, $id_petugas)
+    {
+        $petugas = Petugas::where('id_petugas', $request->id_petugas)->first();
+
+        $validatedData = $request->validate([
+            'nama_petugas' => ['required'],
+            'username' => ['required'],
+            'password' => ['required'],
+            'telp' => ['required'],
+            // 'level' => ['required', 'in:admin,petugas'],
+            'tgl_lahir' => ['required'],
+            'gender' => ['required', 'in:laki-laki,perempuan'],
+        ]);
+
+
+        Petugas::where('id_petugas', $id_petugas)->update($validatedData);
+
+        return redirect('/profile/petugas')->with('success', 'Profil berhasil diperbarui');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Gender;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,10 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            MasyarakatSeeder::class,
-            AdminSeeder::class,
-        ]);
+        $this->call([MasyarakatSeeder::class]);
+        $this->call([AdminSeeder::class]);
+        $this->call([kategoriSeeder::class]);
+
         // \App\Models\User::factory(10)->create();
     }
 }

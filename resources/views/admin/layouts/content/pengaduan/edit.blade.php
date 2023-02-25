@@ -5,12 +5,14 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title"></h3>
                 </div>
-                <form action="" method="">
+                <form action="{{ route('update.pengaduan', $pengaduan->id_pengaduan) }}" method="post">
+                    @method('post')
+                    @csrf
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Judul laporan</label>
@@ -23,17 +25,22 @@
                                 class="form-control">{{ $pengaduan->isi_laporan }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="foto">
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            <label for="exampleInputEmail1">kategori</label>
+                            <select name="id_kategori" class="custom-select">
+                                @foreach ($kategori as $item )
+                                <option value="{{ $item->id_kategori }}">{{ $item->nama }}</option>
+                                @endforeach
+                            </select>
+                            <div class="form-group mt-2 ">
+                                <label for="exampleInputFile">File input</label>
+                                <div class="costum-file">
+                                    <input type="file" name="foto" class="form-control" id="validatedCustomFile"
+                                        required>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary float-right mt-1" style="width: 30%">Submit
+                        </button>
                     </div>
                 </form>
             </div>

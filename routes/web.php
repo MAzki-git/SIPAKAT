@@ -27,6 +27,8 @@ Route::middleware(['admin'])->group(function () {
 Route::middleware(['petugas'])->group(function () {
 });
 
+
+// |--------------------------------------------------------------------------
 //LOGIN MASYARAKAT
 Route::get('/dashboard/user', [UserController::class, 'IndexDashboard'])->name('masyarakat-dashboard');
 Route::get('/login/user', [UserController::class, 'index']);
@@ -34,39 +36,59 @@ Route::post('/login', [UserController::class, 'login'])->name('login.post');
 Route::get('/register', [UserController::class, 'formRegister']);
 Route::post('/register/auth', [UserController::class, 'Registerpost']);
 Route::get('/logout/user', [UserController::class, 'logout']);
+// |--------------------------------------------------------------------------
 
+
+
+// |--------------------------------------------------------------------------
 //LOGIN PETUGAS & ADMIN
 Route::get('/dashboard/admin', [AdminController::class, 'indexDashboard'])->name('admin-dashboard');
 Route::get('/login/admin', [AdminController::class, 'formlogin']);
 Route::post('/login/auth', [AdminController::class, 'login']);
 Route::get('/logout/admin', [AdminController::class, 'logout'])->name('admin.logout');
+// |--------------------------------------------------------------------------
 
 
+
+// |--------------------------------------------------------------------------
 //CRUD PETUGAS & ADMIN
 Route::get('/petugas', [AdminController::class, 'index']);
 Route::get('/tambah', [AdminController::class, 'create']);
-Route::post('/store', [AdminController::class, 'store']);
-Route::get('/edit/{id_pegawai}', [AdminController::class, 'edit'])->name('edit');
-Route::post('/update/{id_petugas}', [AdminController::class, 'update'])->name('update');
+Route::post('/store/petugas', [AdminController::class, 'store'])->name('store.petugas');
+Route::get('/edit/{id_petugas}', [AdminController::class, 'edit'])->name('edit');
+Route::post('/update/petugas/{id_petugas}', [AdminController::class, 'update'])->name('update.petugas');
 Route::get('/delete/{id_petugas}', [AdminController::class, 'destroy'])->name('delete');
 Route::get('/show/{id_petugas}', [AdminController::class, 'show'])->name('show');
+// |--------------------------------------------------------------------------
 
+// profile
+Route::get('/profile/petugas', [PetugasController::class, 'editprofile'])->name('profile.petugas');
+
+// |--------------------------------------------------------------------------
 //CRUD MASYARAKAT
 Route::get('/user', [PetugasController::class, 'index']);
 Route::get('/tambah/user', [PetugasController::class, 'create']);
-Route::post('/store/user', [PetugasController::class, 'store']);
+Route::post('/store/user', [PetugasController::class, 'store'])->name('store.user');
 Route::get('/edit/user/{nik}', [PetugasController::class, 'edit'])->name('edit/user');
 Route::post('/update/user/{nik}', [PetugasController::class, 'update'])->name('update/user');
 Route::get('/delete/user/{nik}', [PetugasController::class, 'destroyuser'])->name('delete/user');
 Route::get('/show/user/{nik}', [PetugasController::class, 'show'])->name('show/user');
+// |--------------------------------------------------------------------------
 
-//pengaduan
+
+
+
+//PENGADUAN
 Route::post('/store', [UserController::class, 'store'])->name('pekat.store');
-// Route::get('/laporan/{siapa?}', [UserController::class, 'laporan'])->name('pekat.laporan');
 Route::get('/edit/pengaduan/{id_pengaduan}', [PengaduanController::class, 'edit'])->name('edit/pengaduan');
-Route::post('/update/pengaduan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('update/pengaduan');
-//tanggapan
+Route::post('/update/pengaduan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('update.pengaduan');
 Route::get('/pengaduan', [PengaduanController::class, 'index']);
 Route::get('/show/pengaduan/{id_pengaduan}', [PengaduanController::class, 'show'])->name('showPengaduan');
-Route::post('tanggapan/createorupdate', [TanggapanController::class, 'CreateOrUpdate'])->name('tanggapan');
 Route::get('/delete/pengaduan/{id_pengaduan}', [PengaduanController::class, 'destroypengaduan'])->name('delete/pengaduan');
+//softdelete pengaduan
+Route::get('/soft', [PengaduanController::class, 'softtrash'])->name('soft.trash');
+Route::get('/pengaduan/restore/{id_pengaduan}', [PengaduanController::class, 'restorepengaduan'])->name('restore.pengaduan');
+Route::get('/pengaduan/force/{id_pengaduan}', [PengaduanController::class, 'forcedeletepengaduan'])->name('force.pengaduan');
+
+//TANGGAPAN
+Route::post('tanggapan/createorupdate', [TanggapanController::class, 'CreateOrUpdate'])->name('tanggapan');

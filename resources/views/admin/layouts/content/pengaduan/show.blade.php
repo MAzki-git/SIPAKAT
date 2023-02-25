@@ -31,28 +31,57 @@
                                     $pengaduan->isi_laporan ??''}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>foto :</b> <a class="float-right embed-responsive" style="color: white">{{
-                                    Storage::url($pengaduan->foto) }}</a>
+                                <b>Kategori laporan :</b> <a class="float-right" style="color: white">
+                                    @foreach($kategori as $item)
+                                    {{ $item->nama }}
+                                    @endforeach</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>foto :</b> <a class="float-right" style="color: white">
+                                    <img src="/storage/{{ $pengaduan->foto }}" alt="" class="embed-responsive"
+                                        data-toggle="modal" data-target="#myModal"> </a>
+                                {{--
+                                <!-- Modal --> --}}
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                {{-- <div class="float-center"> --} }
+                                                    {{-- <button type="button align-center" class="close"
+                                                        data-dismiss="modal" aria-label="Close"><span
+                                                            aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel"
+                                                        style="text-align:center;">
+                                                        Gambar pengaduan</h4> --}}
+                                                    {{--
+                                                </div> --}}
+                                            </div>
+                                            <div class="modal-body" style="width: 100%">
+                                                <center>
+                                                    <img src="/storage/{{ $pengaduan->foto }}" alt=""
+                                                        class="img-responsive embed-responsive">
+                                                </center>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                             <li class="list-group-item">
                                 <b>status :</b> <a class="float-right" style="color: white">
                                     @if($pengaduan->status=='0' )
-                                    <a href="#" class="badge badge-danger float-right">Pending</a>
+                                    <span class="badge badge-danger float-right">Pending</span>
                                     @elseif($pengaduan->status == 'proses')
-                                    <a href="#" class="badge badge-warning float-right">Proses</a>
+                                    <span class="badge badge-warning float-right">Proses</span>
                                     @else
-                                    <a href="#" class="badge badge-success float-right">selesai</a>
+                                    <span class="badge badge-success float-right">selesai</span>
                                     @endif
                                 </a>
                             </li>
-                            {{-- <li class="list-group-item">
-                                <b>Tanggapan:</b> <a class="float-right embed-responsive" style="color: white">{{
-                                    $tanggapan->tanggapan}}</a>
-                            </li> --}}
-                            {{-- <li class="list-group-item">
-                                <b>Tanggal tanggapan :</b> <a class="float-right" style="color: white">{{
-                                    $tanggapan->tgl_tanggapan}}</a>
-                            </li> --}}
                             <li class="list-group-item">
                                 <a class="btn btn-info btn-sm" href="{{ route('edit/pengaduan',
                                     $pengaduan->id_pengaduan ) }}" style="width: 49%">
@@ -65,7 +94,6 @@
                                     </i>
                                 </a>
                             </li>
-
                         </ul>
                     </div>
                 </div>
