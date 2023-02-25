@@ -30,6 +30,14 @@ class UserController extends Controller
         $selesai = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'selesai']])->get()->count();
         return view('dashboard.user-dashboard', compact('kategori', 'pengaduan', 'pending', 'proses', 'selesai'));
     }
+    public function userlaporan()
+    {
+        $pengaduan = Pengaduan::where('nik', Auth::guard('masyarakat')->user()->nik)->orderBy('tgl_pengaduan', 'desc')->get();
+        $pending = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', '=', '0']])->get()->count();
+        $proses = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'proses']])->get()->count();
+        $selesai = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'selesai']])->get()->count();
+        return view('user.content.user-laporan', compact('pengaduan', 'pending', 'proses', 'selesai'));
+    }
     public function login(Request $request)
     {
         $username = Masyarakat::where('username', $request->username)->first();
@@ -60,12 +68,25 @@ class UserController extends Controller
         $data = $request->all();
 
         $validate = Validator::make($data, [
-            'nik' => ['required'],
-            'nama' => ['required'],
-            'username' => ['required'],
-            'password' => ['required'],
-            'telp' => ['required'],
+            'nik' => 'required|numeric|unique:masyarakats|max:16',
+            'nama' => 'required|string|max:255',
+            'username' => 'required|unique:masyarakats',
+            'password'  => 'required|min:8',
+            'telp' => 'required',
+            'tgl_lahir' => 'required',
+            'gender' => 'required', 'in:laki-laki,perempuan',
+            'alamat' => 'required'
+        ], [
+            'nik.required' => 'field nik dibutuhkan',
+            'nama.required' => 'field nama dibutuhkan',
+            'username.required' => 'field username dibutuhkan',
+            'password.min' => 'field password dibutuhkan',
+            'telp.required' => 'field telepon dibutuhkan',
+            'tgl_lahir.required' => 'field tanggal lahir dibutuhkan',
+            'gender.required' => 'field gender dibutuhkan',
+            'alamat.required' => 'field alamat dibutuhkan',
         ]);
+
 
         if ($validate->fails()) {
             return redirect()->back()->with(['pesan' => $validate->errors()]);
@@ -83,6 +104,9 @@ class UserController extends Controller
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             'telp' => $data['telp'],
+            'tgl_lahir' => $data['tgl_lahir'],
+            'gender' => $data['gender'],
+            'alamat' => $data['alamat'],
         ]);
 
         return redirect('login/user');

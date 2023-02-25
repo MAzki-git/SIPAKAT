@@ -1,6 +1,8 @@
 @extends('user.layouts.app')
 
 @section('css')
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+    integrity="sha384-HVSkflmJvKtDQ2tPz3+XuMpK1LVkA7RlYp08hqV7LrpwLwvD++Q2Kyq3qvd7W16j" crossorigin="anonymous">
 <link rel="stylesheet" href="{{ asset('/users/css/landing.css') }}">
 <link rel="stylesheet" href="{{ asset('/users/css/laporan.css') }}">
 @endsection
@@ -58,7 +60,7 @@
                 @if (Session::has('pengaduan'))
                 <div class="alert alert-{{ Session::get('type') }}">{{ Session::get('pengaduan') }}</div>
                 @endif
-                <div class="card mb-3">Tulis Laporan Disini</div>
+                <div class="card mb-3" style="color: #6a70fc">Tulis Laporan Disini</div>
                 <form action="{{ route('pekat.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
@@ -118,10 +120,16 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a href="" style="text-decoration:none;">Laporan saya</a>
+                        <a href="{{ route('user.laporan') }}" style="text-decoration:none;">Laporan saya</a>
                     </li>
-                    <li class="list-group-item">A third item</li>
-                    <li class="list-group-item">A third item</li>
+                    <li class="list-group-item">
+                        <a href="" style="text-decoration:none;">
+                            <i class="nav-icon far fa-envelope"></i>
+                            <p>Setting</p>
+                        </a>
+                    </li>
+                    <li class="list-group-item"> <a href="/logout/user" style="text-decoration:none;">Logout</a>
+                    </li>
                     {{-- <li class="list-group-item">
                         <a href="/logout/admin" <i class="fa fa-power-off"></i>
                             <p>Logout</p>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('level', ['admin', 'petugas']);
             $table->date('tgl_lahir');
             $table->enum('gender', ['laki-laki', 'perempuan']);
+            $table->softDeletes();
             // $table->string('foto')->nullable();
             $table->timestamps();
         });

@@ -30,14 +30,23 @@ class PetugasController extends Controller
     {
         $data = $request->all();
         $validate = validator::make($data, [
-            'nik' => ['required'],
-            'nama' => ['required'],
-            'username' => ['required'],
-            'password' => ['required'],
-            'telp' => ['required'],
-            'tgl_lahir' => ['required'],
-            'gender' => ['required', 'in:laki-laki,perempuan'],
-            'alamat' => ['required']
+            'nik' => 'required|numeric|unique:masyarakats|max:16',
+            'nama' => 'required|string|max:255',
+            'username' => 'required|unique:masyarakats',
+            'password'  => 'required|min:8',
+            'telp' => 'required',
+            'tgl_lahir' => 'required',
+            'gender' => 'required', 'in:laki-laki,perempuan',
+            'alamat' => 'required'
+        ], [
+            'nik.required' => 'field nik dibutuhkan',
+            'nama.required' => 'field nama dibutuhkan',
+            'username.required' => 'field username dibutuhkan',
+            'password.min' => 'field password dibutuhkan',
+            'telp.required' => 'field telepon dibutuhkan',
+            'tgl_lahir.required' => 'field tanggal lahir dibutuhkan',
+            'gender.required' => 'field gender dibutuhkan',
+            'alamat.required' => 'field alamat dibutuhkan',
         ]);
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate);
@@ -69,14 +78,23 @@ class PetugasController extends Controller
     public function update(Request $request, $nik)
     {
         $validatedData = $request->validate([
-            'nik' => 'required',
-            'nama' => 'required',
+            'nik' => 'required|max:16',
+            'nama' => 'required|string|max:255',
             'username' => 'required',
-            'password'  => 'required',
+            'password'  => 'required|min:8',
             'telp' => 'required',
-            'tgl_lahir' => ['required'],
-            'gender' => ['required', 'in:laki-laki,perempuan'],
-            'alamat' => ['required']
+            'tgl_lahir' => 'required',
+            'gender' => 'required', 'in:laki-laki,perempuan',
+            'alamat' => 'required'
+        ], [
+            'nik.required' => 'field nik dibutuhkan',
+            'nama.required' => 'field nama dibutuhkan',
+            'username.required' => 'field username dibutuhkan',
+            'password.min' => 'field password dibutuhkan',
+            'telp.required' => 'field telepon dibutuhkan',
+            'tgl_lahir.required' => 'field tanggal lahir dibutuhkan',
+            'gender.required' => 'field gender dibutuhkan',
+            'alamat.required' => 'field alamat dibutuhkan',
         ]);
         if ($request['nik'] === $nik) {
             Masyarakat::where('nik', $nik)->update([
@@ -100,6 +118,24 @@ class PetugasController extends Controller
         $user = Masyarakat::findOrFail($nik);
         $user->delete();
         return redirect('/user');
+    }
+    public function usertrash()
+    {
+
+        $user = Masyarakat::onlyTrashed()->get();
+        return view('admin.layouts.content.masyarakat.trash.index', compact('user'));
+    }
+    public function restoreuser($nik)
+    {
+        $user = Masyarakat::onlyTrashed()->findOrFail($nik);
+        $user->restore();
+        return redirect()->route('user.trash')->with('success', 'Data berhasil dikembalikan');
+    }
+    public function forcedeleteuser($nik)
+    {
+        $user = Masyarakat::onlyTrashed()->findOrFail($nik);
+        $user->forceDelete();
+        return redirect()->route('user.trash');
     }
 
     public function editprofile()

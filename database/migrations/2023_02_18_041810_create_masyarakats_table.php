@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->date('tgl_lahir');
             $table->text('alamat');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

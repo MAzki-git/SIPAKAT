@@ -1,12 +1,13 @@
 @extends('admin.layouts.app')
 @section('title','Dashboard | Data petugas')
 @section('header', 'Data Petugas')
+
 @section('content')
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                {{-- <h3 class="card-title">DataTable with default features</h3> --}}
+                {{-- <a href="/tambah" type="button" class="btn btn-primary">Tambah petugas</a> --}}
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -14,35 +15,35 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Judul pengaduan</th>
-                                <th>Tanggal</th>
-                                <th>Status</th>
+                                <th>Nama</th>
+                                <th>Username</th>
+                                <th>Telepon</th>
+                                <th>level</th>
                                 <th>Menu</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pengaduan as $item)
+                            @foreach ($petugas as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->judul_laporan }}</td>
-                                <td>{{ $item->tgl_pengaduan }}</td>
+                                <td>{{$item->nama_petugas }}</td>
+                                <td>{{ $item->username }}</td>
+                                <td>{{ $item->telp }}</td>
                                 <td>
-                                    @if($item->status=='0')
-                                    <span href="#" class="badge badge-danger">Pending</span>
-                                    @elseif($item->status == 'proses')
-                                    <span href="#" class="badge badge-warning">Proses</span>
+                                    @if($item->level == 'admin')
+                                    <a href="#" class="badge badge-info">{{ $item->level }}</a>
                                     @else
-                                    <span href="#" class="badge badge-success">selesai</span>
+                                    <a href="#" class="badge badge-warning">{{ $item->level }}</a>
                                     @endif
                                 </td>
                                 <td class="project-actions text-center">
                                     <a style="width: 40%" class="btn btn-primary btn-sm"
-                                        href="{{ route('restore.pengaduan', $item->id_pengaduan) }}">
+                                        href="{{ route('restore.petugas', $item->id_petugas) }}">
                                         <i class="fas fa-undo"></i>
 
                                         </i>
                                     </a>
-                                    <a style="width:40%" href="{{ route('force.pengaduan', $item->id_pengaduan ) }}"
+                                    <a style="width:40%" href="{{ route('force.petugas', $item->id_petugas ) }}"
                                         class="delete-btn btn btn-danger btn-sm" style="width: 50%">
                                         <i class=" fas fa-trash">
                                         </i>
@@ -57,5 +58,4 @@
         </div>
     </div>
 </div>
-
 @endsection

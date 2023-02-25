@@ -107,7 +107,7 @@
                 @if (Auth::guard('admin')->user()->level == 'admin')
                 <li class="nav-header">PRINT LAPORAN</li>
                 <li class="nav-item">
-                    <a href="iframe.html" class="nav-link">
+                    <a href="{{ route('index.print') }}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         <p>Print laporan</p>
                     </a>
@@ -135,7 +135,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/trash" class="nav-link">
+                            <a href="/soft" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pengaduan</p>
                             </a>

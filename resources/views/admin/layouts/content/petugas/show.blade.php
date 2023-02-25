@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row ">
-        <div class="col-md-6">
+        <div class="col-md-10">
 
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
@@ -28,6 +28,21 @@
                         <ul class="list-group ">
                             <li class="list-group-item">
                                 <b>Nama :</b> <a class="float-right" style="color:white">{{ $petugas->nama_petugas
+                                    }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Username :</b> <a class="float-right" style="color:white">{{
+                                    $petugas->username
+                                    }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Jenis kelamin :</b> <a class="float-right" style="color:white">{{
+                                    $petugas->gender
+                                    }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>tanggal lahir :</b> <a class="float-right" style="color:white">{{
+                                    $petugas->tgl_lahir
                                     }}</a>
                             </li>
                             <li class="list-group-item">

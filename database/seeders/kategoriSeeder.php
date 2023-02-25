@@ -21,5 +21,29 @@ class kategoriSeeder extends Seeder
         kategori::create([
             'nama' => 'sosial dan kesejahteraan',
         ]);
+        kategori::create([
+            'nama' => 'Ekonomi dan keuangan',
+        ]);
+        kategori::create([
+            'nama' => 'Lingkungan hidup dan kehutanan',
+        ]);
+        kategori::create([
+            'nama' => 'Pertanian dan peternakan',
+        ]);
+        kategori::create([
+            'nama' => 'Teknologi informasi dan komunikasi',
+        ]);
+        kategori::create([
+            'nama' => 'Kependudukan',
+        ]);
+        kategori::create([
+            'nama' => 'Ketentraman, ketertiban umum dan perlingundan masyarakat',
+        ]);
+        kategori::create([
+            'nama' => 'Pembangunan daerah tertinggal',
+        ]);
+        kategori::create([
+            'nama' => 'Topik lainnya',
+        ]);
     }
 }

@@ -11,7 +11,7 @@
                     <h3 class="card-title"></h3>
                 </div>
                 <form action="{{ route('update.pengaduan', $pengaduan->id_pengaduan) }}" method="post">
-                    @method('post')
+                    @method('put')
                     @csrf
                     <div class="card-body">
                         <div class="form-group">

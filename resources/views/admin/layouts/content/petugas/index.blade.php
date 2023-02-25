@@ -45,7 +45,8 @@
                                     <i class=" fas fa-pencil-alt">
                                     </i>
                                 </a>
-                                <a href="{{ route('delete', $item->id_petugas) }}" class="btn btn-danger btn-sm">
+                                <a href="{{ route('delete', $item->id_petugas) }}"
+                                    class="delete-btn btn btn-danger btn-sm">
                                     <i class=" fas fa-trash">
                                     </i>
                                 </a>

@@ -30,11 +30,19 @@
                                         }}</span></h5>
                             </li>
                             <li class="list-group-item">
+                                <b>Username :</b> <a class="float-right" style="color:white">{{ $user->username
+                                    }}</a>
+                            </li>
+                            <li class="list-group-item">
                                 <b>Nama :</b> <a class="float-right" style="color:white">{{ $user->nama
                                     }}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Jenis kelamin :</b> <a class="float-right" style="color:white">{{ $user->gender
+                                    }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Tanggal lahir :</b> <a class="float-right" style="color:white">{{ $user->tgl_lahir
                                     }}</a>
                             </li>
                             <li class="list-group-item">

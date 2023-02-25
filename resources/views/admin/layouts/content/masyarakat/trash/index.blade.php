@@ -1,12 +1,13 @@
 @extends('admin.layouts.app')
-@section('title','Dashboard | Data petugas')
-@section('header', 'Data Petugas')
+@section('title','Dashboard | Data masyarakat')
+@section('header', 'Data Masyarakat')
+
 @section('content')
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                {{-- <h3 class="card-title">DataTable with default features</h3> --}}
+                {{-- <a href="/tambah/user" type="button" class="btn btn-primary">Tambah Masyarakat</a> --}}
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -14,35 +15,32 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Judul pengaduan</th>
-                                <th>Tanggal</th>
-                                <th>Status</th>
+                                <th>Nik</th>
+                                <th>Nama</th>
+                                <th>Username</th>
+                                {{-- <th>Jenis kelamin</th> --}}
+                                <th>telepon</th>
                                 <th>Menu</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pengaduan as $item)
+                            @foreach ($user as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->judul_laporan }}</td>
-                                <td>{{ $item->tgl_pengaduan }}</td>
-                                <td>
-                                    @if($item->status=='0')
-                                    <span href="#" class="badge badge-danger">Pending</span>
-                                    @elseif($item->status == 'proses')
-                                    <span href="#" class="badge badge-warning">Proses</span>
-                                    @else
-                                    <span href="#" class="badge badge-success">selesai</span>
-                                    @endif
+                                <td>{{ $item->nik }}
                                 </td>
+                                <td>{{ $item->nama }}</td>
+                                <td> {{ $item->username }}</td>
+                                {{-- <td>{{ $item->gender }}</td> --}}
+                                <td>{{ $item->telp }}</td>
                                 <td class="project-actions text-center">
                                     <a style="width: 40%" class="btn btn-primary btn-sm"
-                                        href="{{ route('restore.pengaduan', $item->id_pengaduan) }}">
+                                        href="{{ route('restore.user', $item->nik) }}">
                                         <i class="fas fa-undo"></i>
 
                                         </i>
                                     </a>
-                                    <a style="width:40%" href="{{ route('force.pengaduan', $item->id_pengaduan ) }}"
+                                    <a style="width:40%" href="{{ route('force.user', $item->nik ) }}"
                                         class="delete-btn btn btn-danger btn-sm" style="width: 50%">
                                         <i class=" fas fa-trash">
                                         </i>
@@ -56,6 +54,6 @@
             </div>
         </div>
     </div>
-</div>
 
-@endsection
+    @endsection
+    @section('js')

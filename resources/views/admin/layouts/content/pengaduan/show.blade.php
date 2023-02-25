@@ -32,9 +32,7 @@
                             </li>
                             <li class="list-group-item">
                                 <b>Kategori laporan :</b> <a class="float-right" style="color: white">
-                                    @foreach($kategori as $item)
-                                    {{ $item->nama }}
-                                    @endforeach</a>
+                                    {{ $kategori->nama }}
                             </li>
                             <li class="list-group-item">
                                 <b>foto :</b> <a class="float-right" style="color: white">
@@ -83,13 +81,13 @@
                                 </a>
                             </li>
                             <li class="list-group-item">
-                                <a class="btn btn-info btn-sm" href="{{ route('edit/pengaduan',
+                                {{-- <a class="btn btn-info btn-sm" href="{{ route('edit/pengaduan',
                                     $pengaduan->id_pengaduan ) }}" style="width: 49%">
                                     <i class=" fas fa-pencil-alt">
                                     </i>
-                                </a>
+                                </a> --}}
                                 <a href="{{ route('delete/pengaduan', $pengaduan->id_pengaduan ) }}"
-                                    class="btn btn-danger btn-sm" style="width: 50%">
+                                    class="delete-btn btn btn-danger btn-sm mt-2" style="width: 100%">
                                     <i class=" fas fa-trash">
                                     </i>
                                 </a>

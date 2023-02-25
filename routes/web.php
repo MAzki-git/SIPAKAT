@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\laporanController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\TanggapanController;
@@ -34,7 +35,7 @@ Route::get('/dashboard/user', [UserController::class, 'IndexDashboard'])->name('
 Route::get('/login/user', [UserController::class, 'index']);
 Route::post('/login', [UserController::class, 'login'])->name('login.post');
 Route::get('/register', [UserController::class, 'formRegister']);
-Route::post('/register/auth', [UserController::class, 'Registerpost']);
+Route::post('/register/auth', [UserController::class, 'Registerpost'])->name('register.auth');
 Route::get('/logout/user', [UserController::class, 'logout']);
 // |--------------------------------------------------------------------------
 
@@ -59,6 +60,10 @@ Route::get('/edit/{id_petugas}', [AdminController::class, 'edit'])->name('edit')
 Route::post('/update/petugas/{id_petugas}', [AdminController::class, 'update'])->name('update.petugas');
 Route::get('/delete/{id_petugas}', [AdminController::class, 'destroy'])->name('delete');
 Route::get('/show/{id_petugas}', [AdminController::class, 'show'])->name('show');
+//softdelete petugas
+Route::get('/trash/petugas', [AdminController::class, 'petugastrash'])->name('petugas.trash');
+Route::get('/petugas/restore/{nik}', [AdminController::class, 'restorepetugas'])->name('restore.petugas');
+Route::get('/petugas/force/{nik}', [AdminController::class, 'forcedeletepetugas'])->name('force.petugas');
 // |--------------------------------------------------------------------------
 
 // profile
@@ -73,15 +78,22 @@ Route::get('/edit/user/{nik}', [PetugasController::class, 'edit'])->name('edit/u
 Route::post('/update/user/{nik}', [PetugasController::class, 'update'])->name('update/user');
 Route::get('/delete/user/{nik}', [PetugasController::class, 'destroyuser'])->name('delete/user');
 Route::get('/show/user/{nik}', [PetugasController::class, 'show'])->name('show/user');
+//softdelete user
+Route::get('/trash/user', [PetugasController::class, 'usertrash'])->name('user.trash');
+Route::get('/user/restore/{nik}', [PetugasController::class, 'restoreuser'])->name('restore.user');
+Route::get('/user/force/{nik}', [PetugasController::class, 'forcedeleteuser'])->name('force.user');
 // |--------------------------------------------------------------------------
 
 
 
 
-//PENGADUAN
+//PENGADUAN USER
+Route::get('user/laporan', [UserController::class, 'userlaporan'])->name('user.laporan');
 Route::post('/store', [UserController::class, 'store'])->name('pekat.store');
-Route::get('/edit/pengaduan/{id_pengaduan}', [PengaduanController::class, 'edit'])->name('edit/pengaduan');
-Route::post('/update/pengaduan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('update.pengaduan');
+// Route::get('/edit/pengaduan/{id_pengaduan}', [PengaduanController::class, 'edit'])->name('edit/pengaduan');
+// Route::put('/update/pengaduan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('update.pengaduan');
+
+//PENGADUAN ADMIN
 Route::get('/pengaduan', [PengaduanController::class, 'index']);
 Route::get('/show/pengaduan/{id_pengaduan}', [PengaduanController::class, 'show'])->name('showPengaduan');
 Route::get('/delete/pengaduan/{id_pengaduan}', [PengaduanController::class, 'destroypengaduan'])->name('delete/pengaduan');
@@ -92,3 +104,8 @@ Route::get('/pengaduan/force/{id_pengaduan}', [PengaduanController::class, 'forc
 
 //TANGGAPAN
 Route::post('tanggapan/createorupdate', [TanggapanController::class, 'CreateOrUpdate'])->name('tanggapan');
+
+//printlaporan
+Route::get('laporan/print', [laporanController::class, 'indexlaporan'])->name('index.print');
+Route::post('getLaporan', [laporanController::class, 'getlaporan'])->name('print.getlaporan');
+Route::get('print/laporan{from}/{to}', [laporanController::class, 'printlaporan'])->name('print.laporan');

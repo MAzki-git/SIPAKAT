@@ -87,13 +87,22 @@ class AdminController extends Controller
     {
         $data = $request->all();
         $validate = validator::make($data, [
-            'nama_petugas' => ['required'],
-            'username' => ['required'],
-            'password' => ['required'],
-            'telp' => ['required'],
-            'level' => ['required', 'in:admin,petugas'],
-            'tgl_lahir' => ['required'],
-            'gender' => ['required', 'in:laki-laki,perempuan'],
+            'nama_petugas' => 'required|string|max:255',
+            'username' => 'required|string|unique:petugas',
+            'password' => 'required|min:8',
+            'telp' => 'required',
+            'level' => 'required', 'in:admin,petugas',
+            'tgl_lahir' => 'required',
+            'gender' => 'required', 'in:laki-laki,perempuan',
+
+        ], [
+            'nama_petugas.required' => 'Field nama ini dibutuhkan',
+            'username.required' => 'Field username dibutuhkan',
+            'password.min' => 'Password minimal 8 karakter',
+            'telp.required' => 'Field nomor telepon dibutuhkan',
+            'level.required' => 'Field level ini dibutuhkan',
+            'tgl_lahir.required' => 'field tanggal lahir dibutuhkan',
+            'gender.required' => 'field gender ini dibutuhkan',
 
         ]);
         if ($validate->fails()) {
@@ -124,9 +133,29 @@ class AdminController extends Controller
     }
     public function update(Request $request, $id_petugas)
     {
-        $data = $request->all();
         $petugas = petugas::find($id_petugas);
+        $data = $request->all();
+        $validate = validator::make($data, [
+            'nama_petugas' => 'required|string|max:255',
+            'username' => 'required',
+            'password' => 'required|min:8',
+            'telp' => 'required',
+            'level' => 'required', 'in:admin,petugas',
+            'tgl_lahir' => 'required',
+            'gender' => 'required', 'in:laki-laki,perempuan',
 
+        ], [
+            'nama_petugas.required' => 'Field nama ini dibutuhkan',
+            'username.required' => 'Field username dibutuhkan',
+            'password.min' => 'Password minimal 8 karakter',
+            'telp.required' => 'Field nomor telepon dibutuhkan',
+            'level.required' => 'Field level ini dibutuhkan',
+            'tgl_lahir.required' => 'field tanggal lahir dibutuhkan',
+            'gender.required' => 'field gender ini dibutuhkan',
+        ]);
+        if ($validate->fails()) {
+            return redirect()->back()->withErrors($validate);
+        }
         $petugas->update([
             'nama_petugas' => $data['nama_petugas'],
             'username' => $data['username'],
@@ -143,5 +172,23 @@ class AdminController extends Controller
         $petugas = petugas::find($id_petugas);
         $petugas->delete();
         return redirect('/petugas');
+    }
+    public function petugastrash()
+    {
+
+        $petugas = Petugas::onlyTrashed()->get();
+        return view('admin.layouts.content.petugas.trash.index', compact('petugas'));
+    }
+    public function restorepetugas($id_petugas)
+    {
+        $petugas = Petugas::onlyTrashed()->findOrFail($id_petugas);
+        $petugas->restore();
+        return redirect()->route('petugas.trash')->with('success', 'Data berhasil dikembalikan');
+    }
+    public function forcedeletepetugas($id_petugas)
+    {
+        $petugas = Petugas::onlyTrashed()->findOrFail($id_petugas);
+        $petugas->forceDelete();
+        return redirect()->route('petugas.trash');
     }
 }
