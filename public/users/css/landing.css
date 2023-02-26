@@ -214,7 +214,7 @@ body {
 }
 
 .row .col .content .card {
-    background: white;
+    background: rgb(245, 245, 245);
     padding: 16px;
     color: #fff;
 }

@@ -17,7 +17,7 @@ class PengaduanController extends Controller
         $pengaduan = Pengaduan::where('id_pengaduan', $id_pengaduan)->first();
         $tanggapan = Tanggapan::where('id_pengaduan', $id_pengaduan)->first();
         // dd($pengaduan);
-        return view('admin.layouts.content.pengaduan.show', compact('kategori', 'tanggapan', 'pengaduan'));
+        return view('admin.layouts.content.pengaduan.show', compact('tanggapan', 'pengaduan'));
     }
     public function index()
     {

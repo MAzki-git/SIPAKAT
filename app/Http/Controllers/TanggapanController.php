@@ -34,7 +34,7 @@ class TanggapanController extends Controller
                 'id_pengaduan' => $request->id_pengaduan,
                 'tanggapan' => $request->tanggapan,
             ]);
-            return redirect()->route('showPengaduan/', $pengaduan->id_pengaduan)->with('status=>berhasil dikirim');
+            return redirect()->route('showPengaduan', $pengaduan->id_pengaduan)->with('status=>berhasil dikirim');
         }
     }
 }

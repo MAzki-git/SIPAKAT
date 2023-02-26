@@ -16,8 +16,8 @@ class laporanController extends Controller
     }
     public function getlaporan(Request $request)
     {
-        $from = $request->from . '' . '00:00:00';
-        $to = $request->to . '' . '23:59:59';
+        $from = $request->from . ' ' . '00:00:00';
+        $to = $request->to . ' ' . '23:59:59';
 
         $kategori = kategori::get();
         $pengaduan = Pengaduan::whereBetween('tgl_pengaduan', [$from, $to])->get();
@@ -26,7 +26,7 @@ class laporanController extends Controller
     public function printlaporan($from, $to)
     {
         $pengaduan = Pengaduan::whereBetween('tgl_pengaduan', [$from, $to])->get();
-        $pdf = PDF::loadView('admin.layouts.content.pengaduan.print.print', compact('pengaduan'));
+        $pdf = PDF::loadView('admin.layouts.content.pengaduan.print.indexprint', compact('pengaduan'));
         return $pdf->download('laporan-pengaduan.pdf');
     }
 }

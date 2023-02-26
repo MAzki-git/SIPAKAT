@@ -32,7 +32,7 @@
                             </li>
                             <li class="list-group-item">
                                 <b>Kategori laporan :</b> <a class="float-right" style="color: white">
-                                    {{ $kategori->nama }}
+                                    {{ $pengaduan->kategori->nama }}
                             </li>
                             <li class="list-group-item">
                                 <b>foto :</b> <a class="float-right" style="color: white">

@@ -9,7 +9,7 @@
                 Cari berdasarkan tanggal
             </div>
             <div class="card-body">
-                <form action="{{ route('print.getlaporan') }}" method="post">
+                <form action="{{ route('print.getlaporan') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <input type="text" name="from" class="form-control" placeholder="tanggal awal"
@@ -27,17 +27,23 @@
     <div class="col-lg-12 col-12">
         <div class="card">
             <div class="card-header">
-                Cari berdasarkan tanggal
-                <div class="float-righ">
-                    @if($pengaduan ?? '')
-                    {{-- <a href="{{ route('print.laporan', $from->from, $to->to) }}" class="btn btn-primary">Print</a>
-                    --}}
-                    @endif
+                {{-- Cari berdasarkan tanggal --}}
+                <div class="text-center">
+                    {{-- <div class="float-righ"> --}}
+                        @if($pengaduan ?? '')
+                        <a href="{{ route('print.laporan', ['from' => $from, 'to' => $to]) }}" class="btn btn-success"
+                            style="width: 50%">Print</a>
+
+                        @endif
+                        {{--
+                    </div> --}}
                 </div>
             </div>
+            {{-- $dd($pengaduan) --}}
             <div class="card-body">
                 <div class="table-responsive">
                     @if($pengaduan ?? '')
+
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
@@ -55,11 +61,9 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->judul_laporan }}</td>
                                 <td>{{ $item->tgl_pengaduan }}</td>
-                                <td>{{ $item->isi_laporan }}</td>
-                                {{-- <td>@foreach($kategori as $q)
-                                    {{ $q->nama }}
-                                    @endforeach</a>
-                                </td> --}}
+                                <td class="embed-responsive">{{ $item->isi_laporan }}</td>
+                                <td>{{ $item->kategori->nama }}
+                                </td>
                                 <td>
                                     @if($item->status=='0')
                                     <span href="#" class="badge badge-danger">Pending</span>
@@ -73,9 +77,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @else
                 </div>
             </div>
-            @else
             <div class="text-center">
                 Tidak ada data
             </div>

@@ -9,6 +9,10 @@
 
 @section('title', 'SIPAKAT - Sistem Pengaduan Masyarakat')
 
+{{-- request untuk status tab --}}
+{{-- {{ request('status') == null ? 'active' : '' }} --}}
+
+
 @section('content')
 {{-- Section Header --}}
 <section class="header">
@@ -36,7 +40,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/logout/user">Logout</a>
+                                <a class="dropdown-item" href="/logout/admin">Logout</a>
                             </div>
                         </li>
                     </ul>
@@ -52,34 +56,49 @@
     <div class="row justify-content-between">
         <div class="col-lg-8 col-md-12 col-sm-12 col-12 col">
             <div class="content content-top shadow">
-                @if ($errors->any())
+                {{-- @if ($errors->any())
                 @foreach ($errors->all() as $error)
                 <div class="alert alert-danger">{{ $error }}</div>
                 @endforeach
                 @endif
                 @if (Session::has('pengaduan'))
                 <div class="alert alert-{{ Session::get('type') }}">{{ Session::get('pengaduan') }}</div>
-                @endif
+                @endif --}}
                 <div class="card mb-3" style="color: #6a70fc">Tulis Laporan Disini</div>
                 <form action="{{ route('pekat.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <input name="judul_laporan" placeholder="Masukkan judul Laporan" class="form-control"
-                            rows="4">{{ old('judul_laporan') }}</input>
+                        <label for="exampleInputEmail1">Judul laporan</label>
+                        <input name="judul_laporan" placeholder="Masukkan judul Laporan" class="form-control @error('judul_laporan')is-invalid
+
+                        @enderror" rows="4">{{ old('judul_laporan') }}</input>
+                        @if ($errors->has('judul_laporan'))
+                        <div class="text-danger">{{ $errors->first('judul_laporan') }}</div>
+                        @endif
                     </div>
                     <div class="form-group">
-                        <textarea name="isi_laporan" placeholder="Masukkan Isi Laporan" class="form-control"
-                            rows="4">{{ old('isi_laporan') }}</textarea>
+                        <label for="exampleInputEmail1">Isi laporan</label>
+                        <textarea name="isi_laporan" placeholder="Masukkan Isi Laporan" class="form-control @error('isi_laporan')is-invalid
+
+                        @enderror" rows="4">{{ old('isi_laporan') }}</textarea>
+                        @if ($errors->has('isi_laporan'))
+                        <div class="text-danger">{{ $errors->first('isi_laporan') }}</div>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">kategori</label>
-                        <select name="id_kategori" class="custom-select">
+                        <select name="id_kategori" class="custom-select @error('id_kategori')is-invalid
+
+                        @enderror">
                             @foreach ($kategori as $item )
                             <option value="{{ $item->id_kategori }}">{{ $item->nama }}</option>
                             @endforeach
                         </select>
+                        @if ($errors->has('id_kategori'))
+                        <div class="text-danger">{{ $errors->first('id_kategori') }}</div>
+                        @endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <input type="file" name="foto" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-custom mt-2">Kirim</button>
@@ -128,7 +147,7 @@
                             <p>Setting</p>
                         </a>
                     </li>
-                    <li class="list-group-item"> <a href="/logout/user" style="text-decoration:none;">Logout</a>
+                    <li class="list-group-item"> <a href="/logout/admin" style="text-decoration:none;">Logout</a>
                     </li>
                     {{-- <li class="list-group-item">
                         <a href="/logout/admin" <i class="fa fa-power-off"></i>

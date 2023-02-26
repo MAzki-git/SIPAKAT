@@ -80,7 +80,7 @@
                             <textarea name="alamat" class="form-control" cols="10" rows="1"></textarea>
                         </div>
                     </div>
-                    <a href="/login/user" class="float-left mt-3">Login</a>
+                    <a href="/logout/admin" class="float-left mt-3">Login</a>
                     <button class="btn btn-primary float-right mt-3" style="width:40%">Register</button>
                 </div>
             </form>

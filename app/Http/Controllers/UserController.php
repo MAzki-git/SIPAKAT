@@ -23,15 +23,17 @@ class UserController extends Controller
     public function indexDashboard()
     {
         $kategori = kategori::get();
+        $status = Pengaduan::where('nik', Auth::guard('masyarakat')->user()->nik)->first();
         // $pengaduan = Pengaduan::all();
         $pengaduan = Pengaduan::where('nik', Auth::guard('masyarakat')->user()->nik)->orderBy('tgl_pengaduan', 'desc')->get();
         $pending = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', '=', '0']])->get()->count();
         $proses = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'proses']])->get()->count();
         $selesai = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'selesai']])->get()->count();
-        return view('dashboard.user-dashboard', compact('kategori', 'pengaduan', 'pending', 'proses', 'selesai'));
+        return view('dashboard.user-dashboard', compact('status', 'kategori', 'pengaduan', 'pending', 'proses', 'selesai'));
     }
     public function userlaporan()
     {
+
         $pengaduan = Pengaduan::where('nik', Auth::guard('masyarakat')->user()->nik)->orderBy('tgl_pengaduan', 'desc')->get();
         $pending = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', '=', '0']])->get()->count();
         $proses = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'proses']])->get()->count();
@@ -127,6 +129,10 @@ class UserController extends Controller
             'judul_laporan' => 'required',
             'isi_laporan' => 'required',
             'id_kategori' => 'required',
+        ], [
+            'judul_laporan.required' => 'Field judul laporan dibutuhkan',
+            'isi_laporan.required' => 'Field isi laporan dibutuhkan',
+            'id_kategori.required' => 'Field kategori dibutuhkan'
         ]);
 
         if ($validate->fails()) {
