@@ -32,7 +32,7 @@ Route::middleware(['petugas'])->group(function () {
 // |--------------------------------------------------------------------------
 //LOGIN MASYARAKAT
 Route::get('/dashboard/user', [UserController::class, 'IndexDashboard'])->name('masyarakat-dashboard');
-Route::get('/login/user', [UserController::class, 'index']);
+// Route::get('/login/user', [UserController::class, 'index']);
 Route::post('/login', [UserController::class, 'login'])->name('login.post');
 Route::get('/register', [UserController::class, 'formRegister']);
 Route::post('/register/auth', [UserController::class, 'Registerpost'])->name('register.auth');
@@ -90,8 +90,10 @@ Route::get('/user/force/{nik}', [PetugasController::class, 'forcedeleteuser'])->
 //PENGADUAN USER
 Route::get('user/laporan', [UserController::class, 'userlaporan'])->name('user.laporan');
 Route::post('/store', [UserController::class, 'store'])->name('pekat.store');
-// Route::get('/edit/pengaduan/{id_pengaduan}', [PengaduanController::class, 'edit'])->name('edit/pengaduan');
-// Route::put('/update/pengaduan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('update.pengaduan');
+
+//user edit pengaduan
+Route::get('/edit/pengaduan/{id_pengaduan}', [PengaduanController::class, 'edit'])->name('edit/pengaduan');
+Route::put('/update/pengaduan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('update.pengaduan');
 
 //PENGADUAN ADMIN
 Route::get('/pengaduan', [PengaduanController::class, 'index']);

@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Models\kategori;
 use App\Models\Pengaduan;
 use App\Models\Masyarakat;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -53,7 +52,7 @@ class UserController extends Controller
         if (!$password) {
             return redirect()->back()->with(['pesan' => 'Password tidak sesuai']);
         }
-
+        // session::flash('error', 'login gagal');
         if (Auth::guard('masyarakat')->attempt(['username' => $request->username, 'password' => $request->password])) {
             return redirect('/dashboard/user');
         } else {
@@ -67,10 +66,12 @@ class UserController extends Controller
     }
     public function registerpost(Request $request)
     {
-        $data = $request->all();
 
-        $validate = Validator::make($data, [
-            'nik' => 'required|numeric|unique:masyarakats|max:16',
+
+        $data = $request->all();
+        // dd($request->all());
+        $validate = $request->validate([
+            'nik' => 'required|unique:masyarakats|min:15|max:17',
             'nama' => 'required|string|max:255',
             'username' => 'required|unique:masyarakats',
             'password'  => 'required|min:8',
@@ -78,6 +79,7 @@ class UserController extends Controller
             'tgl_lahir' => 'required',
             'gender' => 'required', 'in:laki-laki,perempuan',
             'alamat' => 'required'
+
         ], [
             'nik.required' => 'field nik dibutuhkan',
             'nama.required' => 'field nama dibutuhkan',
@@ -90,9 +92,9 @@ class UserController extends Controller
         ]);
 
 
-        if ($validate->fails()) {
-            return redirect()->back()->with(['pesan' => $validate->errors()]);
-        }
+        // if ($validate->fails()) {
+        //     return redirect()->back()->with(['pesan' => $validate->errors()]);
+        // }
 
         $username = Masyarakat::where('username', $request->username)->first();
 
@@ -111,27 +113,30 @@ class UserController extends Controller
             'alamat' => $data['alamat'],
         ]);
 
-        return redirect('login/user');
+        return redirect('login/admin');
     }
 
     public function logout()
     {
         Auth::guard('masyarakat')->logout();
 
-        return redirect('/login/user');
+        return redirect('/login/admin');
     }
     public function store(Request $request)
     {
         $data = $request->all();
+        // dd($request->all());
 
         // dd($request->all());
         $validate = Validator::make($data, [
             'judul_laporan' => 'required',
             'isi_laporan' => 'required',
+            'alamat' => 'required',
             'id_kategori' => 'required',
         ], [
             'judul_laporan.required' => 'Field judul laporan dibutuhkan',
             'isi_laporan.required' => 'Field isi laporan dibutuhkan',
+            'alamat.required' => 'field alamat dibutuhkan',
             'id_kategori.required' => 'Field kategori dibutuhkan'
         ]);
 
@@ -146,9 +151,10 @@ class UserController extends Controller
         date_default_timezone_set('Asia/Bangkok');
 
         $pengaduan = Pengaduan::create([
+            'nik' => Auth::guard('masyarakat')->user()->nik,
             'judul_laporan' => $data['judul_laporan'],
             'tgl_pengaduan' => date('Y-m-d h:i:s'),
-            'nik' => Auth::guard('masyarakat')->user()->nik,
+            'alamat' => $data['alamat'],
             'id_kategori' => $data['id_kategori'],
             'isi_laporan' => $data['isi_laporan'],
             'foto' => $data['foto'] ?? '',

@@ -28,11 +28,15 @@
                             </li>
                             <li class="list-group-item">
                                 <b>isi laporan :</b> <a class="float-right" style="color: white">{{
-                                    $pengaduan->isi_laporan ??''}}</a>
+                                    $pengaduan->isi_laporan }}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Kategori laporan :</b> <a class="float-right" style="color: white">
-                                    {{ $pengaduan->kategori->nama }}
+                                    {{ $pengaduan->kategori->nama }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Alamat :</b> <a class="float-right" style="color: white">{{
+                                    $pengaduan->alamat}}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>foto :</b> <a class="float-right" style="color: white">

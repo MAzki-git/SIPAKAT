@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
+
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,6 +18,8 @@ class admin
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if (Auth::guar('admin')->check() && Auth::guard('admin')->user()->level == 'admin')
+            return $next($request);
+        return redirect('/login/admin');
     }
 }

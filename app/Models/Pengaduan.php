@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use function PHPSTORM_META\map;
+
 class Pengaduan extends Model
 {
     use HasFactory, SoftDeletes;
@@ -13,13 +15,16 @@ class Pengaduan extends Model
 
     protected $table = 'pengaduans';
     protected $primaryKey = 'id_pengaduan';
-    protected $guarded = ['id_pengaduan'];
-    //     'judul_laporan',
-    //     'tgl_pengaduan',
-    //     'isi_laporan',
-    //     'foto',
-    //     'status',
-    // ];
+    protected $fillable = [
+        'nik',
+        'judul_laporan',
+        'tgl_pengaduan',
+        'alamat',
+        'isi_laporan',
+        'foto',
+        'id_kategori',
+        'status',
+    ];
 
     protected $dates = ['tgl_pengaduan', 'deleted_at'];
     public function user()

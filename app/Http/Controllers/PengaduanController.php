@@ -25,42 +25,48 @@ class PengaduanController extends Controller
         // $pengaduan = Pengaduan::where('tgl_pengaduan', 'desc')->get();
         return view('admin.layouts.content.pengaduan.index', compact('pengaduan'));
     }
-    // public function edit($id_pengaduan)
-    // {
-    //     $kategori = kategori::all();
-    //     $pengaduan = Pengaduan::where('id_pengaduan', $id_pengaduan)->first();
-    //     return view('admin.layouts.content.pengaduan.edit', compact('pengaduan', 'kategori'));
-    // }
-    // public function update(Request $request, $id_pengaduan)
-    // {
-    //     // dd($request->all());
-    //     $data = $request->all();
-    //     $validate = Validator::make($data, [
-    //         'judul_laporan' => ['required'],
-    //         'isi_laporan' => ['required'],
-    //         'tgl_pengaduan' => ['required'],
-    //         'id_kategori' => ['required'],
+    public function edit($id_pengaduan)
+    {
+        $kategori = kategori::all();
+        $pengaduan = Pengaduan::where('id_pengaduan', $id_pengaduan)->first();
+        return view('user.content.edit', compact('pengaduan', 'kategori'));
+    }
+    public function update(Request $request, $id_pengaduan)
+    {
+        // dd($request->all());
+        $data = $request->all();
+        $validate = Validator::make($data, [
+            'judul_laporan' => 'required',
+            'isi_laporan' => 'required',
+            'alamat' => 'required',
+            'id_kategori' => 'required',
+        ], [
+            'judul_laporan.required' => 'Field judul laporan dibutuhkan',
+            'isi_laporan.required' => 'Field isi laporan dibutuhkan',
+            'alamat.required' => 'field alamat dibutuhkan',
+            'id_kategori.required' => 'Field kategori dibutuhkan'
+        ]);
 
-    //     ]);
-
-    //     if ($validate->fails()) {
-    //         return redirect()->back()->withInput()->withErrors($validate);
-    //     }
-    //     if ($request->file('foto')) {
-    //         $data['foto'] = $request->file('foto')->store('assets/pengaduan', 'public');
-    //     }
-    //     date_default_timezone_set('Asia/Bangkok');
-    //     Pengaduan::where('id_pengaduan', $id_pengaduan)->update([
-    //         'nik' => Auth::guard('masyarakat')->user()->nik,
-    //         'judul_laporan' => $data['judul_laporan'],
-    //         'isi_laporan' => $data['isi_laporan'],
-    //         'tgl_pengaduan' => date('Y-m-d h:i:s'),
-    //         'foto' => $data['foto'] ?? '',
-    //         'status' => '0',
-    //         'id_kategori' => $data['id_kategori']
-    //     ]);
-    //     return redirect('/pengaduan')->with('success', 'Pengaduan berhasil diubah');
-    // }
+        if ($validate->fails()) {
+            return redirect()->back()->withInput()->withErrors($validate);
+        }
+        if ($request->file('foto')) {
+            $data['foto'] = $request->file('foto')->store('assets/pengaduan', 'public');
+        }
+        date_default_timezone_set('Asia/Bangkok');
+        Pengaduan::where('id_pengaduan', $id_pengaduan)->update([
+            'nik' => Auth::guard('masyarakat')->user()->nik,
+            'judul_laporan' => $data['judul_laporan'],
+            'tgl_pengaduan' => date('Y-m-d h:i:s'),
+            'alamat' => $data['alamat'],
+            'id_kategori' => $data['id_kategori'],
+            'isi_laporan' => $data['isi_laporan'],
+            'foto' => $data['foto'] ?? '',
+            'status' => '0',
+        ]);
+        return redirect('/user/laporan
+        ')->with('success', 'Pengaduan berhasil diubah');
+    }
     public function destroypengaduan($id_pengaduan)
     {
         $pengaduan = Pengaduan::findOrFail($id_pengaduan);

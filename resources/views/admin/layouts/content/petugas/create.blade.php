@@ -67,7 +67,7 @@
                                 <select name="level" id="level" class="custom-select @error('level')is-invalid
 
                                 @enderror">
-                                    <option value="petugas" selected>Pilih level (Default petugas)</option>
+                                    <option selected disabled>Pilih level</option>
                                     <option value="petugas">Petugas</option>
                                     <option value="admin">Admin</option>
                                 </select>
@@ -93,8 +93,8 @@
                                 <select name="gender" id="gender" class="custom-select @error('gender')is-invalid
 
                                 @enderror">
-                                    {{-- <option value="laki-laki" selected>Pilih level (Default laki-laki)</option>
-                                    --}}
+                                    <option selected disabled>jenis kelamin</option>
+
                                     <option value="laki-laki">Laki laki</option>
                                     <option value="perempuan">Perempuan</option>
                                 </select>

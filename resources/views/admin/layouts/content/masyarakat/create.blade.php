@@ -78,8 +78,8 @@
                                 <select name="gender" id="gender" class="custom-select @error('gender')is-invalid
 
                                 @enderror">
-                                    {{-- <option value="laki-laki" selected>Pilih level (Default laki-laki)</option>
-                                    --}}
+                                    <option selected disabled>Pilih Jenis kelamin</option>
+
                                     <option value="laki-laki">Laki laki</option>
                                     <option value="perempuan">Perempuan</option>
                                 </select>

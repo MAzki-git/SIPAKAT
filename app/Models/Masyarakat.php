@@ -15,6 +15,7 @@ class Masyarakat extends Authenticatable
     protected $table = 'masyarakats';
     protected $primaryKey = 'nik';
     protected $dates = ['deleted_at'];
+    // protected $guarded = ['nik'];
     protected $fillable = [
         'nik',
         'nama',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,13 @@ class petugas
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if (Auth::guard('admin')->check()) {
+            if (Auth::guard('admin')->user()->level == 'petugas') {
+                return $next($request);
+            } elseif (Auth::guard('admin')->user()->level == 'petugas') {
+                return $next($request);
+            }
+        }
+        return redirect('/login/admin');
     }
 }

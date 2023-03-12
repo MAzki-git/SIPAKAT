@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('id_pengaduan');
             $table->string('judul_laporan');
             $table->datetime('tgl_pengaduan');
+            $table->string('alamat');
             $table->char('nik', 16);
             $table->foreignId('id_kategori');
             $table->text('isi_laporan');

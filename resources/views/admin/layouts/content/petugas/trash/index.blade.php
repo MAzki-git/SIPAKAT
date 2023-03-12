@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
-@section('title','Dashboard | Data petugas')
-@section('header', 'Data Petugas')
+@section('title','Dashboard | Sampah petugas')
+@section('header', 'Sampah petugas')
 
 @section('content')
 <div class="row">

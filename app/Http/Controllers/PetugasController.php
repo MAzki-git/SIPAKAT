@@ -30,7 +30,8 @@ class PetugasController extends Controller
     {
         $data = $request->all();
         $validate = validator::make($data, [
-            'nik' => 'required|numeric|unique:masyarakats|max:16',
+            // 'nik' => 'required|numeric|unique:masyarakats|max:16',
+            'nik' => 'required|unique:masyarakats|min:15|max:17',
             'nama' => 'required|string|max:255',
             'username' => 'required|unique:masyarakats',
             'password'  => 'required|min:8',
