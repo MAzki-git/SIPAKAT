@@ -213,8 +213,8 @@ body {
     }
 }
 
-.row .col .content .card {
-    background: rgb(245, 245, 245);
+.row .col .content {
+    /* background: #009dff; */
     padding: 16px;
     color: #fff;
 }

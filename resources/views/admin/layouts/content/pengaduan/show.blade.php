@@ -131,9 +131,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Tanggapan</label>
-                                <textarea type="text" class=" form-control" name="tanggapan">
+                                <label>Tanggapan</label>
+                                <textarea type="text" class=" form-control @error('tanggapan')is-invalid
+
+                                @enderror" name="tanggapan">
                                 </textarea>
+                                @if ($errors->has('tanggapan'))
+                                <div class="text-danger">{{ $errors->first('tanggapan') }}</div>
+                                @endif
                             </div>
                             <button type="submit" class="btn btn-success">Submit</button>
                         </form>

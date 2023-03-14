@@ -94,6 +94,8 @@ Route::post('/store', [UserController::class, 'store'])->name('pekat.store');
 //user edit pengaduan
 Route::get('/edit/pengaduan/{id_pengaduan}', [PengaduanController::class, 'edit'])->name('edit/pengaduan');
 Route::put('/update/pengaduan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('update.pengaduan');
+// Route::get('/delete/pengaduan/user/{id_pengaduan}', [PengaduanController::class, 'destroypengaduanuser'])->name('delete/pengaduan/user');
+Route::get('/show/pengaduan/user/{id_pengaduan}', [UserController::class, 'showpengaduan'])->name('show.pengaduan.user');
 
 //PENGADUAN ADMIN
 Route::get('/pengaduan', [PengaduanController::class, 'index']);

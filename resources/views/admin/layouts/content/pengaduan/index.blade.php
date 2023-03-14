@@ -30,7 +30,7 @@
                                 @if($item->status=='0')
                                 <span href="#" class="badge badge-danger">Pending</span>
                                 @elseif($item->status == 'proses')
-                                <span href="#" class="badge badge-warning">Proses</span>
+                                <span href="#" class="badge badge-warning" style="color: white">Proses</span>
                                 @else
                                 <span href="#" class="badge badge-success">selesai</span>
                                 @endif

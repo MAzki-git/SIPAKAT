@@ -19,7 +19,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="/dashboard/user">
                     <h4 class="semi-bold mb-0 text-white">SIPAKAT</h4>
                     <p class="italic mt-0 text-white">Sistem Pengaduan Masyarakat</p>
                 </a>
@@ -54,7 +54,7 @@
 {{-- Section Card --}}
 <div class="container">
     <div class="row justify-content-between">
-        <div class="col-lg-8 col-md-12 col-sm-12 col-12 col">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12 col">
             <div class="content content-top shadow">
                 @if ($errors->any())
                 @foreach ($errors->all() as $error)
@@ -64,66 +64,68 @@
                 @if (Session::has('pengaduan'))
                 <div class="alert alert-{{ Session::get('type') }}">{{ Session::get('pengaduan') }}</div>
                 @endif
-                <div class="card mb-3" style="color: #1219f0">Ubah pengaduan disini</div>
-                <form action="{{ route('update.pengaduan', $pengaduan->id_pengaduan) }}" method="POST"
-                    enctype="multipart/form-data">
-                    @method('put')
-                    @csrf
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Judul laporan</label>
-                        <input name="judul_laporan" placeholder="masukan judul laporan"
-                            value="{{ $pengaduan->judul_laporan }}" class="form-control @error('judul_laporan')is-invalid
+                {{-- <div class="card mb-6"> --}}
+                    <div class="card-header" style="color: #1219f0">
+                        <h4 class="text-center" style="color: #1219f0">Ubah pengaduan disini</h4>
+                    </div>
+                    {{--
+                </div> --}}
+                <div class="card-header">
+                    <form action="{{ route('update.pengaduan', $pengaduan->id_pengaduan) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @method('put')
+                        @csrf
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: black">Judul laporan</label>
+                            <input name="judul_laporan" placeholder="masukan judul laporan"
+                                value="{{ $pengaduan->judul_laporan }}" class="form-control @error('judul_laporan')is-invalid
 
                         @enderror" rows="4">{{ old('judul_laporan') }}</input>
-                        @if ($errors->has('judul_laporan'))
-                        <div class="text-danger">{{ $errors->first('judul_laporan') }}</div>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Isi laporan</label>
-                        <textarea name="isi_laporan" placeholder="Masukkan Isi Laporan" class="form-control @error('isi_laporan')is-invalid
+                            @if ($errors->has('judul_laporan'))
+                            <div class="text-danger">{{ $errors->first('judul_laporan') }}</div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: black">Isi laporan</label>
+                            <textarea name="isi_laporan" placeholder="Masukkan Isi Laporan" class="form-control @error('isi_laporan')is-invalid
 
                         @enderror" rows="4">{{ $pengaduan->isi_laporan }}</textarea>
-                        @if ($errors->has('isi_laporan'))
-                        <div class="text-danger">{{ $errors->first('isi_laporan') }}</div>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">kategori</label>
-                        <select name="id_kategori" class="custom-select @error('id_kategori')is-invalid @enderror">
-                            {{-- <option selected>{{ $pengaduan->kategori->nama }}</option> --}}
-                            @foreach ($kategori as $item )
-                            <option value="{{ $item->id_kategori }}">{{ $item->nama }}</option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('id_kategori'))
-                        <div class="text-danger">{{ $errors->first('id_kategori') }}</div>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Alamat</label>
-                        <textarea name="alamat" cols="10" rows="2" placeholder="Masukkan alamat" class="form-control @error('alamat')is-invalid
+                            @if ($errors->has('isi_laporan'))
+                            <div class="text-danger">{{ $errors->first('isi_laporan') }}</div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: black">kategori</label>
+                            <select name="id_kategori" class="custom-select @error('id_kategori')is-invalid @enderror">
+                                @foreach ($kategori as $item )
+                                <option value="{{ $item->id_kategori }}" {{ $pengaduan->id_kategori ==
+                                    $item->id_kategori ? 'selected' : '' }}>{{ $item->nama }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('id_kategori'))
+                            <div class="text-danger">{{ $errors->first('id_kategori') }}</div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: black">Alamat</label>
+                            <textarea name="alamat" cols="10" rows="2" placeholder="Masukkan alamat" class="form-control @error('alamat')is-invalid
 
                                             @enderror" rows="4">{{ $pengaduan->alamat}}</textarea>
-                        @if ($errors->has('alamat'))
-                        <div class="text-danger">{{ $errors->first('alamat') }}</div>
-                        @endif
-                    </div>
-                    <div class="form-group mt-4">
-                        <input type="file" name="foto" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-custom mt-2">Kirim</button>
-                </form>
+                            @if ($errors->has('alamat'))
+                            <div class="text-danger">{{ $errors->first('alamat') }}</div>
+                            @endif
+                        </div>
+                        <div class="form-group mt-4">
+                            <label for="exampleInputEmail1" style="color: black">Gambar laporan</label>
+                            <input type="file" name="foto" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-custom mt-2">Kirim</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    {{-- Footer --}}
-    <div class="mt-5">
-        <hr>
-        <div class="text-center">
-            <p class="italic text-secondary">© 2021 Ihsanfrr • All rights reserved</p>
-        </div>
-    </div>
+
     @endsection
 
     @section('js')

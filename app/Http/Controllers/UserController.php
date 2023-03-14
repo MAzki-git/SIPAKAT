@@ -4,6 +4,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tanggapan;
 use App\Models\kategori;
 use App\Models\Pengaduan;
 use App\Models\Masyarakat;
@@ -33,11 +34,21 @@ class UserController extends Controller
     public function userlaporan()
     {
 
+
+        $status = Pengaduan::where('nik', Auth::guard('masyarakat')->user()->nik)->count();
         $pengaduan = Pengaduan::where('nik', Auth::guard('masyarakat')->user()->nik)->orderBy('tgl_pengaduan', 'desc')->get();
         $pending = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', '=', '0']])->get()->count();
         $proses = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'proses']])->get()->count();
         $selesai = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'selesai']])->get()->count();
-        return view('user.content.user-laporan', compact('pengaduan', 'pending', 'proses', 'selesai'));
+        return view('user.content.user-laporan', compact('pengaduan', 'pending', 'proses', 'selesai', 'status'));
+    }
+    public function showpengaduan($id_pengaduan)
+    {
+        $kategori = kategori::all();
+        $pengaduan = Pengaduan::where('id_pengaduan', $id_pengaduan)->first();
+        $tanggapan = Tanggapan::where('id_pengaduan', $id_pengaduan)->first();
+        // dd($pengaduan);
+        return view('user.content.show', compact('tanggapan', 'pengaduan'));
     }
     public function login(Request $request)
     {

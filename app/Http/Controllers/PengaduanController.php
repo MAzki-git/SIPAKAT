@@ -91,4 +91,11 @@ class PengaduanController extends Controller
         $pengaduan->forceDelete();
         return redirect()->route('soft.trash');
     }
+
+    public function destroypengaduanuser($id_pengaduan)
+    {
+        $pengaduan = Pengaduan::findOrFail($id_pengaduan);
+        $pengaduan->delete();
+        return redirect('/user/laporan');
+    }
 }

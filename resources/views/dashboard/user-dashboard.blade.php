@@ -64,54 +64,59 @@
                 @if (Session::has('pengaduan'))
                 <div class="alert alert-{{ Session::get('type') }}">{{ Session::get('pengaduan') }}</div>
                 @endif
-                <div class="card mb-3" style="color: #6a70fc">Tulis Laporan Disini</div>
-                <form action="{{ route('pekat.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Judul laporan</label>
-                        <input name="judul_laporan" placeholder="Masukkan judul Laporan" class="form-control @error('judul_laporan')is-invalid
+                <div class="card-header">
+                    <h5 class="text-center" style="color: #6a70fc">Tulis Laporan Disini</h5>
+                </div>
+                <div class="card-header">
+                    <form action="{{ route('pekat.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: black">Judul laporan</label>
+                            <input name="judul_laporan" placeholder="Masukkan judul Laporan" class="form-control @error('judul_laporan')is-invalid
 
                         @enderror" rows="4">{{ old('judul_laporan') }}</input>
-                        @if ($errors->has('judul_laporan'))
-                        <div class="text-danger">{{ $errors->first('judul_laporan') }}</div>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Isi laporan</label>
-                        <textarea name="isi_laporan" placeholder="Masukkan Isi Laporan" class="form-control @error('isi_laporan')is-invalid
+                            @if ($errors->has('judul_laporan'))
+                            <div class="text-danger">{{ $errors->first('judul_laporan') }}</div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: black">Isi laporan</label>
+                            <textarea name="isi_laporan" placeholder="Masukkan Isi Laporan" class="form-control @error('isi_laporan')is-invalid
 
                         @enderror" rows="4">{{ old('isi_laporan') }}</textarea>
-                        @if ($errors->has('isi_laporan'))
-                        <div class="text-danger">{{ $errors->first('isi_laporan') }}</div>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">kategori</label>
-                        <select name="id_kategori" class="custom-select @error('id_kategori')is-invalid @enderror">
-                            <option selected disabled>Pilih kategori</option>
-                            @foreach ($kategori as $item )
-                            <option value="{{ $item->id_kategori }}">{{ $item->nama }}</option>
-                            @endforeach
-                        </select>
-                        @if ($errors->has('id_kategori'))
-                        <div class="text-danger">{{ $errors->first('id_kategori') }}</div>
-                        @endif
-                    </div>
+                            @if ($errors->has('isi_laporan'))
+                            <div class="text-danger">{{ $errors->first('isi_laporan') }}</div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: black">kategori</label>
+                            <select name="id_kategori" class="custom-select @error('id_kategori')is-invalid @enderror">
+                                <option selected disabled>Pilih kategori</option>
+                                @foreach ($kategori as $item )
+                                <option value="{{ $item->id_kategori }}">{{ $item->nama }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('id_kategori'))
+                            <div class="text-danger">{{ $errors->first('id_kategori') }}</div>
+                            @endif
+                        </div>
 
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Alamat</label>
-                        <textarea name="alamat" cols="10" rows="2" placeholder="Masukkan alamat" class="form-control @error('alamat')is-invalid
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" style="color: black">Alamat</label>
+                            <textarea name="alamat" cols="10" rows="2" placeholder="Masukkan alamat" class="form-control @error('alamat')is-invalid
 
                                             @enderror" rows="4">{{ old('alamat') }}</textarea>
-                        @if ($errors->has('alamat'))
-                        <div class="text-danger">{{ $errors->first('alamat') }}</div>
-                        @endif
-                    </div>
-                    <div class="form-group mt-4">
-                        <input type="file" name="foto" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-custom mt-2">Kirim</button>
-                </form>
+                            @if ($errors->has('alamat'))
+                            <div class="text-danger">{{ $errors->first('alamat') }}</div>
+                            @endif
+                        </div>
+                        <div class="form-group mt-4">
+                            <label for="exampleInputEmail1" style="color: black">Gambar laporan</label>
+                            <input type="file" name="foto" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-custom mt-2">Kirim</button>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12 col-12 col">
@@ -126,20 +131,20 @@
                         </div>
                         <div class="row text-center">
                             <div class="col">
-                                <p class="italic mb-0">pending</p>
-                                <div class="text-center">
+                                <p class="italic mb-0 text-danger">pending</p>
+                                <div class="text-center text-danger">
                                     {{ $pending }}
                                 </div>
                             </div>
                             <div class="col">
-                                <p class="italic mb-0">Proses</p>
-                                <div class="text-center">
+                                <p class="italic mb-0 text-warning">Proses</p>
+                                <div class="text-center text-warning">
                                     {{ $proses}}
                                 </div>
                             </div>
                             <div class="col">
-                                <p class="italic mb-0">Selesai</p>
-                                <div class="text-center">
+                                <p class="italic mb-0 text-success">Selesai</p>
+                                <div class="text-center text-success">
                                     {{ $selesai }}
                                 </div>
                             </div>
@@ -162,65 +167,8 @@
                 </ul>
             </div>
         </div>
+    </div>
 
-        <div class="row mt-5">
-            <div class="col-lg-8">
-                {{-- <a class="d-inline tab {{ $siapa != 'me' ? 'tab-active' : ''}} mr-4" href="">
-                    Semua
-                </a>
-                <a class="d-inline tab {{ $siapa == 'me' ? 'tab-active' : ''}}" href="">
-                    Laporan Saya
-                </a>
-                <hr> --}}
-            </div>
-            {{-- @foreach ($pengaduan as $pengaduan => $v)
-            <div class="col-lg-8">
-                <div class="laporan-top">
-                    <img src="{{ asset('/users/images/user_default.svg') }}" alt="profile" class="profile">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <p>{{ $v->user->nama }}</p>
-                            @if ($v->status == '0')
-                            <p class="text-danger">Pending</p>
-                            @elseif($v->status == 'proses')
-                            <p class="text-warning">{{ ucwords($v->status) }}</p>
-                            @else
-                            <p class="text-success">{{ ucwords($v->status) }}</p>
-                            @endif
-                        </div>
-                        <div>
-                            <p>{{ $v->tgl_pengaduan->format('d M, h:i') }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="laporan-mid">
-                    <div class="judul-laporan">
-                        {{ $v->judul_laporan }}
-                    </div>
-                    <p>{{ $v->isi_laporan }}</p>
-                </div>
-                <div class="laporan-bottom">
-                    @if ($v->foto != null)
-                    <img src="{{ Storage::url($v->foto) }}" alt="{{ 'Gambar '.$v->judul_laporan }}"
-                        class="gambar-lampiran">
-                    @endif
-                    @if ($v->tanggapan != null)
-                    <p class="mt-3 mb-1">{{ 'Tanggapan dari '. $v->tanggapan->petugas->nama_petugas }}</p>
-                    <p class="light">{{ $v->tanggapan->tanggapan }}</p>
-                    @endif
-                </div>
-                <hr>
-            </div>
-            @endforeach --}}
-        </div>
-    </div>
-    {{-- Footer --}}
-    <div class="mt-5">
-        <hr>
-        <div class="text-center">
-            <p class="italic text-secondary">© 2021 Ihsanfrr • All rights reserved</p>
-        </div>
-    </div>
     @endsection
 
     @section('js')

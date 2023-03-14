@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="/dashboard/user">
                     <h4 class="semi-bold mb-0 text-white">SIPAKAT</h4>
                     <p class="italic mt-0 text-white">Sistem Pengaduan Masyarakat</p>
                 </a>
@@ -34,7 +34,7 @@
                                 }}
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Another action</a>
+                                {{-- <a class="dropdown-item" href="#">Another action</a> --}}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/logout/user">Logout</a>
                             </div>
@@ -69,21 +69,33 @@
                                 </h5>
                                 <p class="text-primary">{{ Auth::guard('masyarakat')->user()->username }}</p>
                             </div>
-                            <div class="row text-center">
+                            <div class="row text-center mt-4">
                                 <div class="col">
-                                    <p class="italic mb-0  text-danger">pending</p>
-                                    <div class="text-center text-danger">
-                                        {{ $pending }}
+                                    <a href="{{ route('user.laporan') }}"
+                                        class="italic mb-0 text-primary {{ (Request::url() == route('user.laporan')) && !request('status') ? 'active' : '' }}"
+                                        style="text-decoration: none"><b>
+                                            <h6>semua laporan</h6>
+                                        </b></a>
+                                    <div class="text-center text-info">
+                                        {{ $status }}
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <p class="italic mb-0 text-warning">Proses</p>
+                                    <a href="{{ route('user.laporan', ['status' =>'proses']) }}"
+                                        class="italic mb-0 text-warning {{ request('status') == 'proses' ? 'active' : '' }}"
+                                        style="text-decoration: none"><b>
+                                            <h6>Proses</h6>
+                                        </b></a>
                                     <div class="text-center text-warning">
                                         {{ $proses}}
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <p class="italic mb-0 text-success">Selesai</p>
+                                    <a href="{{ route('user.laporan', ['status' =>'selesai']) }}"
+                                        class="italic mb-0 text-success {{ request('status') == 'proses' ? 'active' : '' }}"
+                                        style="text-decoration: none"><b>
+                                            <h6>Selesai</h6>
+                                        </b></a>
                                     <div class="text-center text-success">
                                         {{ $selesai }}
                                     </div>
@@ -91,16 +103,27 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
+                <a href="/dashboard/user" class="btn btn-primary" style="width:100%">Kembali</a>
             </div>
         </div>
     </div>
     <div class="row justify-content-between">
         <div class="col-lg-12 mt-4">
             <div class="content content-top shadow">
-                {{-- <div class="card"> --}}
+                <div class="card mb-3">
                     <div class="card-header card-outline card-primary">
+                        @if($pengaduan->isEmpty())
+                        <div class="col-lg-12">
+                            <h6 class="text-center">Tidak Ada Laporan</h6>
+                        </div>
+                        @endif
+
                         @foreach ($pengaduan as $pengaduan => $v)
+                        @if(request('status') && $v->status != request('status'))
+                        @continue
+                        @endif
                         <div class="col-lg-12">
                             <div class="laporan-top">
                                 <img src="{{ asset('/users/images/user_default.svg') }}" alt="profile" class="profile">
@@ -120,12 +143,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ route('edit/pengaduan',$v->id_pengaduan) }}"
-                                class="btn btn-primary float-right">Edit
-                                <i class=" fas fa-pencil-alt">
-                                </i>
-                            </a>
+                            @if($v->status == 0)
 
+                            <a href="{{ route('edit/pengaduan',$v->id_pengaduan) }}"
+                                class="btn btn-secondary float-right">Edit
+                            </a>
+                            @endif
+                            <a class="btn btn-info float-right ml-2"
+                                href="{{ route('show.pengaduan.user', $v->id_pengaduan) }}">
+                                lihat
+                            </a>
                             <div class="laporan-mid">
                                 <div class="judul-laporan">
                                     {{ $v->judul_laporan }}
@@ -134,10 +161,10 @@
                             </div>
 
                             <div class="laporan-bottom">
-                                @if ($v->foto != null)
+                                {{-- @if ($v->foto != null)
                                 <img src="{{ Storage::url($v->foto) }}" alt="{{ 'Gambar '.$v->judul_laporan }}"
                                     class="gambar-lampiran">
-                                @endif
+                                @endif --}}
                                 @if ($v->tanggapan != null)
                                 <p class="mt-3 mb-1">{{ 'Tanggapan dari '. $v->tanggapan->petugas->nama_petugas }}</p>
                                 <p class="light">{{ $v->tanggapan->tanggapan }}</p>
@@ -147,19 +174,12 @@
                         </div>
                         @endforeach
                     </div>
-                    {{--
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
 </div>
-{{-- Footer --}}
-<div class="mt-5">
-    <hr>
-    <div class="text-center">
-        <p class="italic text-secondary">© 2021 Ihsanfrr • All rights reserved</p>
-    </div>
-</div>
+
 @endsection
 
 @section('js')
